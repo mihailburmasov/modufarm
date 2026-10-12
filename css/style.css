@@ -256,7 +256,7 @@ p { margin: 0; }
   .section { padding: 72px 0; }
   .section__head { margin-bottom: 36px; }
   .header__cta { display: none; }
-  .header__cta--keep { display: inline-flex; }
+  .header__cta--keep { display: inline-flex; min-height: 40px; padding: 8px 14px; font-size: 14px; white-space: nowrap; }
   .burger { margin-left: auto; }
   .logo__sub { display: none; }
   .hero { padding: calc(var(--header-h) + 28px) 0 56px; }

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /send.php
+Disallow: /spasibo.html
+
+Sitemap: https://DOMAIN/sitemap.xml

@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ModuFarm — сельхозроботы и проектирование фруктовых садов</title>
+  <meta name="description" content="Разрабатываем сельхозроботов под агротехнические задачи разных культур: опыление, диагностика болезней, оценка состояния растений, обработка срезов, микроклимат теплиц. Проектируем фруктовые сады.">
+  <!-- ЗАПОЛНИТЬ: DOMAIN — адрес сайта (здесь, в robots.txt, sitemap.xml, config.php) -->
+  <link rel="canonical" href="https://DOMAIN/">
+  <meta name="theme-color" content="#0e3b2c">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="ModuFarm">
+  <meta property="og:title" content="ModuFarm — сельхозроботы и проектирование фруктовых садов">
+  <meta property="og:description" content="Роботы под задачи конкретной культуры и сады, в которых технике удобно работать.">
+  <meta property="og:url" content="https://DOMAIN/">
+  <meta property="og:image" content="https://DOMAIN/img/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="preload" href="fonts/unbounded-cyr.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-cyr.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ModuFarm",
+    "legalName": "ООО «Ключ «Гремячий»",
+    "url": "https://DOMAIN/",
+    "logo": "https://DOMAIN/img/apple-touch-icon.png",
+    "taxID": "9102276068",
+    "address": {
+      "@type": "PostalAddress",
+      "postalCode": "297061",
+      "addressCountry": "RU",
+      "addressRegion": "Республика Крым",
+      "addressLocality": "с. Колодезное",
+      "streetAddress": "Птицеводческая ул., зд. 32"
+    },
+    "description": "Разработка сельскохозяйственных роботов под агротехнические задачи и проектирование фруктовых садов."
+  }
+  </script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-logo" viewBox="0 0 40 40">
+    <rect x="1" y="1" width="38" height="38" rx="11" fill="var(--logo-bg, #0e3b2c)"/>
+    <path d="M11 29c0-9.5 6.5-17 18-18-0.6 11.6-8.2 18-18 18z" fill="var(--logo-leaf, #9fdc6a)"/>
+    <path d="M11 29 22.5 17.5" stroke="var(--logo-bg, #0e3b2c)" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="22.5" cy="17.5" r="2.6" fill="var(--logo-bg, #0e3b2c)"/>
+    <circle cx="22.5" cy="17.5" r="1.2" fill="var(--logo-leaf, #9fdc6a)"/>
+  </symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><path d="M5 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM19 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M7 17h7a3 3 0 0 0 0-6H10a3 3 0 0 1 0-6h7"/></symbol>
+  <symbol id="i-flower" viewBox="0 0 24 24"><circle cx="12" cy="10" r="2.2"/><path d="M12 7.8C12 5 10.5 3 9 3S7 5 9 7.5M14.2 10c2.8 0 4.8-1.5 4.8-3s-2-2-4.5 0M12 12.2c0 2.8 1.5 4.8 3 4.8s2-2 0-4.5M9.8 10C7 10 5 11.5 5 13s2 2 4.5 0"/><path d="M12 17v4"/></symbol>
+  <symbol id="i-leafscan" viewBox="0 0 24 24"><path d="M3 7V4a1 1 0 0 1 1-1h3M17 3h3a1 1 0 0 1 1 1v3M21 17v3a1 1 0 0 1-1 1h-3M7 21H4a1 1 0 0 1-1-1v-3"/><path d="M8 16c0-4.5 3-8 8-8.5-.3 5.4-3.6 8.5-8 8.5zM8 16l4.5-4.5"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></symbol>
+  <symbol id="i-cut" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.6 7.6 20 16M8.6 16.4 20 8"/></symbol>
+  <symbol id="i-climate" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H3z"/><path d="M10 13v3.5a2 2 0 1 0 2 0V13"/><path d="M15 14h3M15 17h3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<header class="header" data-header>
+  <div class="container header__inner">
+    <a class="logo" href="#top" aria-label="ModuFarm — на главную">
+      <svg class="logo__mark" width="40" height="40"><use href="#i-logo"/></svg>
+      <span class="logo__text"><span class="logo__name">ModuFarm</span><span class="logo__sub">агроробототехника</span></span>
+    </a>
+    <nav class="nav" data-nav aria-label="Разделы">
+      <a href="#napravleniya">Направления</a>
+      <a href="#robot">Робот под культуру</a>
+      <a href="#sady">Проекты садов</a>
+      <a href="#etapy">Как работаем</a>
+      <a href="#dokumenty">Документы</a>
+      <a href="#zayavka">Контакты</a>
+    </nav>
+    <a class="btn btn--accent btn--sm header__cta" href="#zayavka">Обсудить задачу</a>
+    <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" data-burger><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== Первый экран ===== -->
+  <section class="hero">
+    <div class="hero__grid-bg" aria-hidden="true"></div>
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <p class="eyebrow eyebrow--light">Агроробототехника · Республика Крым</p>
+        <h1 class="hero__title">Сельхозроботы под задачи вашей культуры и&nbsp;проекты фруктовых садов</h1>
+        <p class="hero__lead">Разрабатываем роботов под конкретные агротехнические операции — от опыления цветков до ранней диагностики болезней. Проектируем сады, в которых технике удобно работать.</p>
+        <div class="hero__actions">
+          <a class="btn btn--accent" href="#zayavka" data-topic="Сельхозробот под задачу">Обсудить задачу <svg class="ic"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--ghost-light" href="#zayavka" data-topic="Проект фруктового сада">Заказать проект сада</a>
+        </div>
+        <ul class="hero__facts">
+          <li><b>6</b><span>программ для ЭВМ зарегистрированы в Роспатенте</span></li>
+          <li><b>2</b><span>направления: робототехника и&nbsp;проектирование садов</span></li>
+        </ul>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <!-- Иллюстрация: роботизированная тележка в междурядье сада. Нарисована для сайта, не фото продукции. -->
+        <svg viewBox="0 0 560 480" class="hero__svg">
+          <defs>
+            <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#174c39"/><stop offset="1" stop-color="#0e3b2c"/>
+            </linearGradient>
+            <linearGradient id="g-ground" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2d6b3e"/><stop offset="1" stop-color="#1d5232"/>
+            </linearGradient>
+            <radialGradient id="g-scan" cx="0.5" cy="0" r="1">
+              <stop offset="0" stop-color="#b8f07a" stop-opacity=".55"/><stop offset="1" stop-color="#b8f07a" stop-opacity="0"/>
+            </radialGradient>
+            <clipPath id="c-card"><rect x="0" y="0" width="560" height="480" rx="28"/></clipPath>
+          </defs>
+          <g clip-path="url(#c-card)">
+            <rect width="560" height="480" fill="url(#g-sky)"/>
+            <circle cx="430" cy="92" r="46" fill="#f4c56a" opacity=".9"/>
+            <circle cx="430" cy="92" r="70" fill="#f4c56a" opacity=".12"/>
+            <path d="M0 230 Q140 190 280 214 T560 200 V480 H0z" fill="#1f5a37"/>
+            <path d="M0 262 L560 250 V480 H0z" fill="url(#g-ground)"/>
+            <!-- ряды в перспективе -->
+            <g stroke="#3f8a4d" stroke-width="2" opacity=".55">
+              <path d="M280 252 L-60 480"/><path d="M280 252 L80 480"/><path d="M280 252 L210 480"/>
+              <path d="M280 252 L350 480"/><path d="M280 252 L480 480"/><path d="M280 252 L620 480"/>
+            </g>
+            <!-- деревья: дальний план -->
+            <g class="trees-far">
+              <g transform="translate(222 236)"><rect x="-1.5" y="0" width="3" height="10" fill="#4a3426"/><circle r="11" cy="-4" fill="#3e9450"/></g>
+              <g transform="translate(250 238)"><rect x="-1.5" y="0" width="3" height="9" fill="#4a3426"/><circle r="10" cy="-4" fill="#47a058"/></g>
+              <g transform="translate(310 238)"><rect x="-1.5" y="0" width="3" height="9" fill="#4a3426"/><circle r="10" cy="-4" fill="#47a058"/></g>
+              <g transform="translate(338 236)"><rect x="-1.5" y="0" width="3" height="10" fill="#4a3426"/><circle r="11" cy="-4" fill="#3e9450"/></g>
+            </g>
+            <!-- средний план -->
+            <g>
+              <g transform="translate(168 276)"><rect x="-3" y="0" width="6" height="22" fill="#4a3426"/><circle r="24" cy="-10" fill="#3a8b4b"/><circle r="15" cx="-10" cy="-20" fill="#4ea85e"/><circle cx="8" cy="-6" r="3.5" fill="#e8553a"/><circle cx="-12" cy="-4" r="3.5" fill="#e8553a"/></g>
+              <g transform="translate(392 276)"><rect x="-3" y="0" width="6" height="22" fill="#4a3426"/><circle r="24" cy="-10" fill="#3a8b4b"/><circle r="15" cx="10" cy="-20" fill="#4ea85e"/><circle cx="-8" cy="-4" r="3.5" fill="#e8553a"/><circle cx="12" cy="-10" r="3.5" fill="#e8553a"/></g>
+            </g>
+            <!-- ближний план -->
+            <g>
+              <g transform="translate(70 360)"><rect x="-6" y="0" width="12" height="60" fill="#4a3426"/><circle r="56" cy="-24" fill="#327f43"/><circle r="36" cx="-24" cy="-48" fill="#45a055"/><circle r="26" cx="26" cy="-40" fill="#3d944f"/><circle cx="20" cy="-10" r="7" fill="#e8553a"/><circle cx="-26" cy="-14" r="7" fill="#e8553a"/><circle cx="-4" cy="-56" r="7" fill="#f07a4a"/></g>
+              <g transform="translate(492 360)"><rect x="-6" y="0" width="12" height="60" fill="#4a3426"/><circle r="56" cy="-24" fill="#327f43"/><circle r="36" cx="24" cy="-48" fill="#45a055"/><circle r="26" cx="-26" cy="-40" fill="#3d944f"/><circle cx="-20" cy="-10" r="7" fill="#e8553a"/><circle cx="26" cy="-14" r="7" fill="#e8553a"/></g>
+            </g>
+            <!-- маршрут -->
+            <path class="hero__route" d="M280 470 C280 420 282 360 280 300" stroke="#b8f07a" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round" fill="none"/>
+            <!-- робот -->
+            <g class="hero__robot" transform="translate(280 392)">
+              <ellipse cx="0" cy="54" rx="92" ry="12" fill="#0b2f22" opacity=".45"/>
+              <!-- скан-луч -->
+              <path class="hero__beam" d="M44 -64 L118 -120 L136 -60 Z" fill="url(#g-scan)"/>
+              <!-- мачта и камера -->
+              <rect x="30" y="-70" width="8" height="52" rx="3" fill="#cfd8d3"/>
+              <rect x="22" y="-86" width="30" height="20" rx="6" fill="#e9efe9"/>
+              <circle cx="44" cy="-76" r="5.5" fill="#0e3b2c"/><circle cx="44" cy="-76" r="2.4" fill="#b8f07a"/>
+              <!-- манипулятор -->
+              <path d="M-36 -22 L-58 -64 L-30 -96" stroke="#e9efe9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <circle cx="-58" cy="-64" r="7" fill="#f4c56a"/><circle cx="-36" cy="-22" r="7" fill="#f4c56a"/>
+              <path d="M-30 -96 l-8 -10 M-30 -96 l10 -6" stroke="#e9efe9" stroke-width="4" stroke-linecap="round"/>
+              <!-- корпус -->
+              <rect x="-74" y="-26" width="148" height="56" rx="14" fill="#f2f4ee"/>
+              <rect x="-74" y="-26" width="148" height="18" rx="9" fill="#e2e8df"/>
+              <rect x="-56" y="-2" width="62" height="16" rx="5" fill="#0e3b2c"/>
+              <rect x="-50" y="3" width="14" height="6" rx="2" fill="#b8f07a"/><rect x="-32" y="3" width="8" height="6" rx="2" fill="#7fc25a"/><rect x="-20" y="3" width="20" height="6" rx="2" fill="#3e9450"/>
+              <circle cx="46" cy="6" r="7" fill="#e8553a"/>
+              <!-- колёса -->
+              <g fill="#1b2a24"><circle cx="-50" cy="38" r="17"/><circle cx="50" cy="38" r="17"/></g>
+              <g fill="#5b6b63"><circle cx="-50" cy="38" r="6"/><circle cx="50" cy="38" r="6"/></g>
+            </g>
+            <!-- метки данных -->
+            <g class="hero__tag" transform="translate(386 168)">
+              <rect width="142" height="54" rx="12" fill="#f2f4ee"/>
+              <circle cx="20" cy="27" r="7" fill="#3e9450"/>
+              <text x="36" y="23" font-family="Inter, sans-serif" font-size="11" fill="#5c6f66">Состояние кроны</text>
+              <text x="36" y="40" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#0e3b2c">норма</text>
+            </g>
+            <g class="hero__tag hero__tag--2" transform="translate(30 132)">
+              <rect width="150" height="54" rx="12" fill="#f2f4ee"/>
+              <circle cx="20" cy="27" r="7" fill="#f4c56a"/>
+              <text x="36" y="23" font-family="Inter, sans-serif" font-size="11" fill="#5c6f66">Ряд 14, дерево 32</text>
+              <text x="36" y="40" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#0e3b2c">опыление</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Направления (по свидетельствам Роспатента) ===== -->
+  <section class="section" id="napravleniya">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow">Направления разработки</p>
+        <h2 class="section__title">Какие задачи в саду и теплице мы автоматизируем</h2>
+        <p class="section__lead">Под каждую операцию у нас своя программа управления. Все шесть зарегистрированы в Реестре программ для ЭВМ Роспатента.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card reveal">
+          <div class="card__icon"><svg class="ic"><use href="#i-route"/></svg></div>
+          <h3 class="card__title">Навигация по саду</h3>
+          <p>Расчёт оптимального маршрута роботизированной тележки по участку: в каком порядке объезжать ряды, чтобы не тратить время и заряд впустую.</p>
+          <a class="card__doc" href="docs/svidetelstvo-2026689317.pdf" target="_blank" rel="noopener">Свидетельство № 2026689317</a>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg class="ic"><use href="#i-flower"/></svg></div>
+          <h3 class="card__title">Искусственное опыление</h3>
+          <p>Управление опылением цветков плодовых культур. Помогает, когда погода или нехватка пчёл ставят урожай под угрозу.</p>
+          <a class="card__doc" href="docs/svidetelstvo-2026689318.pdf" target="_blank" rel="noopener">Свидетельство № 2026689318</a>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg class="ic"><use href="#i-leafscan"/></svg></div>
+          <h3 class="card__title">Ранняя диагностика болезней</h3>
+          <p>Распознавание заболеваний растений на ранней стадии и подбор средств защиты, пока болезнь не распространилась по саду.</p>
+          <a class="card__doc" href="docs/svidetelstvo-2026689950.pdf" target="_blank" rel="noopener">Свидетельство № 2026689950</a>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg class="ic"><use href="#i-pulse"/></svg></div>
+          <h3 class="card__title">Оценка состояния растений</h3>
+          <p>Общая оценка состояния растений и определение, какие агротехнические мероприятия нужны и где именно.</p>
+          <a class="card__doc" href="docs/svidetelstvo-2026689951.pdf" target="_blank" rel="noopener">Свидетельство № 2026689951</a>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg class="ic"><use href="#i-cut"/></svg></div>
+          <h3 class="card__title">Дезинфекция срезов</h3>
+          <p>Управление обработкой мест среза после удаления избыточных побегов плодовых культур, чтобы через срез не проникла инфекция.</p>
+          <a class="card__doc" href="docs/svidetelstvo-2026690114.pdf" target="_blank" rel="noopener">Свидетельство № 2026690114</a>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg class="ic"><use href="#i-climate"/></svg></div>
+          <h3 class="card__title">Микроклимат теплицы</h3>
+          <p>Мониторинг параметров среды в тепличном комплексе и автоматическое управление исполнительными механизмами.</p>
+          <a class="card__doc" href="docs/svidetelstvo-2026689319.pdf" target="_blank" rel="noopener">Свидетельство № 2026689319</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Робот под культуру ===== -->
+  <!-- ПОДТВЕРДИТЬ у заказчика: состав робота и подход описаны в общем виде, без ТТХ -->
+  <section class="section section--dark" id="robot">
+    <div class="container split">
+      <div class="split__text">
+        <p class="eyebrow eyebrow--light">Робот под культуру</p>
+        <h2 class="section__title">Не универсальная машина, а&nbsp;робот под вашу задачу</h2>
+        <p class="section__lead section__lead--light">У яблони, черешни, винограда и тепличного огурца разные схемы посадки, высота кроны и уязвимые места. Поэтому мы начинаем не с каталога, а с культуры и операции, которую нужно взять на себя.</p>
+        <a class="btn btn--accent" href="#zayavka" data-topic="Сельхозробот под задачу">Рассказать о своей задаче <svg class="ic"><use href="#i-arrow"/></svg></a>
+      </div>
+      <ol class="layers">
+        <li class="layers__item reveal"><span class="layers__num">01</span><div><h3>Платформа</h3><p>Ходовая часть под ширину междурядий, рельеф и покрытие участка.</p></div></li>
+        <li class="layers__item reveal"><span class="layers__num">02</span><div><h3>Зрение и датчики</h3><p>Камеры и сенсоры, которые видят то, что важно для конкретной культуры: цветки, листья, побеги, срезы.</p></div></li>
+        <li class="layers__item reveal"><span class="layers__num">03</span><div><h3>Рабочий инструмент</h3><p>Навесной модуль под операцию: опыление, обработка, мониторинг.</p></div></li>
+        <li class="layers__item reveal"><span class="layers__num">04</span><div><h3>Программа управления</h3><p>Собственное программное обеспечение: маршрут, распознавание, решения о мероприятиях.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== Проектирование садов ===== -->
+  <!-- ПОДТВЕРДИТЬ у заказчика: состав проекта сада (пункты ниже — типовые разделы) -->
+  <section class="section" id="sady">
+    <div class="container split split--reverse">
+      <div class="split__text">
+        <p class="eyebrow">Проектирование садов</p>
+        <h2 class="section__title">Проектируем фруктовые сады, готовые к&nbsp;технике</h2>
+        <p class="section__lead">Сад закладывают на десятилетия. Если в проекте сразу учесть, как по нему будет ходить техника и роботы, потом не придётся перестраивать ряды и опоры.</p>
+        <ul class="ticks">
+          <li><svg class="ic"><use href="#i-check"/></svg>Схема посадки и ширина междурядий под технику</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Размещение рядов с учётом рельефа участка</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Опорные конструкции и формировка кроны</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Орошение и подъезды к рядам</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Проходы для роботизированной техники и точки обслуживания</li>
+        </ul>
+        <a class="btn btn--primary" href="#zayavka" data-topic="Проект фруктового сада">Заказать проект сада <svg class="ic"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="plan reveal" aria-hidden="true">
+        <!-- Схема сада: условная иллюстрация -->
+        <svg viewBox="0 0 440 400" class="plan__svg">
+          <rect x="1" y="1" width="438" height="398" rx="24" fill="#f7f5ec" stroke="#d9d4c2"/>
+          <g stroke="#e3dfd0" stroke-width="1">
+            <path d="M40 0v400M80 0v400M120 0v400M160 0v400M200 0v400M240 0v400M280 0v400M320 0v400M360 0v400M400 0v400"/>
+            <path d="M0 40h440M0 80h440M0 120h440M0 160h440M0 200h440M0 240h440M0 280h440M0 320h440M0 360h440"/>
+          </g>
+          <path d="M50 340 Q60 60 380 60" stroke="#c3d9e6" stroke-width="10" fill="none" stroke-linecap="round" opacity=".7"/>
+          <g fill="#3e9450">
+            <defs><g id="row"><circle cx="0" cy="0" r="9"/><circle cx="30" cy="0" r="9"/><circle cx="60" cy="0" r="9"/><circle cx="90" cy="0" r="9"/><circle cx="120" cy="0" r="9"/><circle cx="150" cy="0" r="9"/><circle cx="180" cy="0" r="9"/><circle cx="210" cy="0" r="9"/></g></defs>
+            <use href="#row" x="130" y="120"/><use href="#row" x="130" y="170"/><use href="#row" x="130" y="220"/><use href="#row" x="130" y="270"/><use href="#row" x="130" y="320"/>
+          </g>
+          <g fill="#e8553a"><circle cx="190" cy="170" r="3"/><circle cx="280" cy="220" r="3"/><circle cx="220" cy="270" r="3"/><circle cx="310" cy="120" r="3"/></g>
+          <path d="M108 95 H362 V145 H108 V195 H362 V245 H108 V295 H362" stroke="#e8553a" stroke-width="3" stroke-dasharray="8 7" fill="none" stroke-linecap="round"/>
+          <g transform="translate(96 84)"><rect width="24" height="20" rx="5" fill="#0e3b2c"/><circle cx="6" cy="20" r="4" fill="#1b2a24"/><circle cx="18" cy="20" r="4" fill="#1b2a24"/></g>
+          <g font-family="Inter, sans-serif" font-size="12" fill="#5c6f66">
+            <text x="372" y="149">4,5 м</text>
+            <path d="M366 155 v40" stroke="#5c6f66"/><path d="M362 155h8M362 195h8" stroke="#5c6f66"/>
+            <text x="28" y="384">Схема условная</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Для кого ===== -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow">С кем работаем</p>
+        <h2 class="section__title">Кому это полезно</h2>
+      </div>
+      <div class="audience">
+        <div class="audience__item reveal"><h3>Садоводческие хозяйства</h3><p>Когда не хватает рабочих рук на сезонные операции и важно не пропустить начало болезни.</p></div>
+        <div class="audience__item reveal"><h3>Тепличные комплексы</h3><p>Когда нужно держать микроклимат под контролем без постоянного ручного вмешательства.</p></div>
+        <div class="audience__item reveal"><h3>Закладка нового сада</h3><p>Когда сад только планируется и его можно сразу спроектировать под механизацию.</p></div>
+        <div class="audience__item reveal"><h3>Питомники и опытные участки</h3><p>Когда нужно регулярно оценивать состояние большого числа растений.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Этапы ===== -->
+  <!-- ПОДТВЕРДИТЬ у заказчика: порядок работы -->
+  <section class="section" id="etapy">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow">Как работаем</p>
+        <h2 class="section__title">От задачи до работающего решения</h2>
+      </div>
+      <ol class="steps">
+        <li class="steps__item reveal"><span class="steps__num">1</span><h3>Обсуждаем задачу</h3><p>Культура, площадь, операция, которую нужно автоматизировать, или участок под будущий сад.</p></li>
+        <li class="steps__item reveal"><span class="steps__num">2</span><h3>Изучаем участок</h3><p>Схема посадки, междурядья, рельеф, условия в теплице.</p></li>
+        <li class="steps__item reveal"><span class="steps__num">3</span><h3>Предлагаем решение</h3><p>Состав робота и программ или проект сада — с понятными этапами и сроками.</p></li>
+        <li class="steps__item reveal"><span class="steps__num">4</span><h3>Разрабатываем и настраиваем</h3><p>Адаптируем технику и программы под вашу культуру и условия.</p></li>
+        <li class="steps__item reveal"><span class="steps__num">5</span><h3>Сопровождаем</h3><p>Помогаем на старте работы и дорабатываем по результатам сезона.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== Документы ===== -->
+  <section class="section section--soft" id="dokumenty">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow">Документы</p>
+        <h2 class="section__title">Свидетельства и сертификаты</h2>
+        <p class="section__lead">Правообладатель программ — ООО «Ключ «Гремячий». Номера свидетельств можно проверить в открытом Реестре программ для ЭВМ на сайте ФИПС (Роспатент).</p>
+      </div>
+
+      <div class="docs">
+        <a class="doc reveal" href="docs/svidetelstvo-2026689317.pdf" target="_blank" rel="noopener">
+          <img src="img/docs/svidetelstvo-2026689317.webp" width="560" height="792" loading="lazy" alt="Свидетельство о государственной регистрации программы для ЭВМ № 2026689317">
+          <span class="doc__num">№ 2026689317 · 28.09.2026</span>
+          <span class="doc__name">Определение оптимального маршрута роботизированной тележки</span>
+        </a>
+        <a class="doc reveal" href="docs/svidetelstvo-2026689318.pdf" target="_blank" rel="noopener">
+          <img src="img/docs/svidetelstvo-2026689318.webp" width="560" height="792" loading="lazy" alt="Свидетельство о государственной регистрации программы для ЭВМ № 2026689318">
+          <span class="doc__num">№ 2026689318 · 28.09.2026</span>
+          <span class="doc__name">Управление искусственным опылением цветков плодовых культур</span>
+        </a>
+        <a class="doc reveal" href="docs/svidetelstvo-2026689319.pdf" target="_blank" rel="noopener">
+          <img src="img/docs/svidetelstvo-2026689319.webp" width="560" height="792" loading="lazy" alt="Свидетельство о государственной регистрации программы для ЭВМ № 2026689319">
+          <span class="doc__num">№ 2026689319 · 28.09.2026</span>
+          <span class="doc__name">Мониторинг среды и регулирование механизмов в тепличном комплексе</span>
+        </a>
+        <a class="doc reveal" href="docs/svidetelstvo-2026689950.pdf" target="_blank" rel="noopener">
+          <img src="img/docs/svidetelstvo-2026689950.webp" width="560" height="792" loading="lazy" alt="Свидетельство о государственной регистрации программы для ЭВМ № 2026689950">
+          <span class="doc__num">№ 2026689950 · 01.10.2026</span>
+          <span class="doc__name">Распознавание заболеваний растений на ранней стадии</span>
+        </a>
+        <a class="doc reveal" href="docs/svidetelstvo-2026689951.pdf" target="_blank" rel="noopener">
+          <img src="img/docs/svidetelstvo-2026689951.webp" width="560" height="792" loading="lazy" alt="Свидетельство о государственной регистрации программы для ЭВМ № 2026689951">
+          <span class="doc__num">№ 2026689951 · 01.10.2026</span>
+          <span class="doc__name">Оценка состояния растений и потребности в агромероприятиях</span>
+        </a>
+        <a class="doc reveal" href="docs/svidetelstvo-2026690114.pdf" target="_blank" rel="noopener">
+          <img src="img/docs/svidetelstvo-2026690114.webp" width="560" height="792" loading="lazy" alt="Свидетельство о государственной регистрации программы для ЭВМ № 2026690114">
+          <span class="doc__num">№ 2026690114 · 02.10.2026</span>
+          <span class="doc__name">Дезинфекция мест среза избыточных побегов плодовых культур</span>
+        </a>
+      </div>
+
+      <!-- Сертификат ИСО касается системы менеджмента качества (область — строительство и проектная документация),
+           а не продукции. По условиям разрешения знак нельзя подавать как знак качества продукции — не ставить рядом с роботами. -->
+      <div class="iso reveal">
+        <a class="iso__img" href="docs/sertifikat-iso-9001.pdf" target="_blank" rel="noopener">
+          <img src="img/docs/sertifikat-iso-9001-1.webp" width="560" height="792" loading="lazy" alt="Сертификат соответствия AKC.RU.A12793 системы менеджмента качества ГОСТ Р ИСО 9001-2015">
+        </a>
+        <div class="iso__text">
+          <p class="eyebrow">Система менеджмента качества</p>
+          <h3>Сертификат соответствия ГОСТ Р ИСО 9001-2015</h3>
+          <dl class="iso__list">
+            <div><dt>Номер</dt><dd>AKC.RU.A12793</dd></div>
+            <div><dt>Действует</dt><dd>с 21.09.2026 до 21.09.2029</dd></div>
+            <div><dt>Область</dt><dd>Работы по строительству, реконструкции и капитальному ремонту, подготовка проектной документации и инженерные изыскания для объектов капитального строительства</dd></div>
+            <div><dt>Выдан</dt><dd>Система добровольной сертификации «Азбука Консалта. Сертификация»</dd></div>
+          </dl>
+          <p class="iso__note">Подлинность можно проверить в реестре на сайте <a href="http://www.azbukon.ru" target="_blank" rel="noopener">azbukon.ru</a>.</p>
+          <a class="btn btn--ghost" href="docs/sertifikat-iso-9001.pdf" target="_blank" rel="noopener"><svg class="ic"><use href="#i-doc"/></svg>Открыть сертификат (PDF)</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Заявка ===== -->
+  <section class="section section--dark" id="zayavka">
+    <div class="container lead">
+      <div class="lead__text">
+        <p class="eyebrow eyebrow--light">Обсудить проект</p>
+        <h2 class="section__title">Расскажите, какую задачу нужно решить</h2>
+        <p class="section__lead section__lead--light">Опишите культуру, площадь и операцию, которую хотите автоматизировать, или участок под будущий сад. Мы свяжемся с вами и предложим, с чего начать.</p>
+        <!-- ЗАПОЛНИТЬ: телефон и e-mail заказчика. Раскомментировать блок, когда будут данные.
+        <ul class="lead__contacts">
+          <li><a href="tel:+7XXXXXXXXXX" data-goal="phone_click">+7 (XXX) XXX-XX-XX</a></li>
+          <li><a href="mailto:EMAIL">EMAIL</a></li>
+        </ul>
+        -->
+        <p class="lead__addr">ООО «Ключ «Гремячий» · Республика Крым, Красногвардейский район</p>
+      </div>
+
+      <form class="form" action="send.php" method="post" novalidate data-form>
+        <input type="hidden" name="form_name" value="main">
+        <div class="form__trap" aria-hidden="true"><label>Сайт <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+        <fieldset class="form__topics">
+          <legend>Что вас интересует</legend>
+          <label class="chip"><input type="radio" name="topic" value="Сельхозробот под задачу" checked><span>Сельхозробот</span></label>
+          <label class="chip"><input type="radio" name="topic" value="Проект фруктового сада"><span>Проект сада</span></label>
+          <label class="chip"><input type="radio" name="topic" value="Автоматизация теплицы"><span>Теплица</span></label>
+          <label class="chip"><input type="radio" name="topic" value="Другое"><span>Другое</span></label>
+        </fieldset>
+
+        <div class="form__row">
+          <label class="field"><span>Имя</span><input type="text" name="name" autocomplete="name" maxlength="80" placeholder="Как к вам обращаться"></label>
+          <label class="field"><span>Телефон *</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required data-phone></label>
+        </div>
+        <label class="field"><span>Культура и площадь</span><input type="text" name="crop" maxlength="200" placeholder="Например: яблоня, 40 га"></label>
+        <label class="field"><span>Задача</span><textarea name="message" rows="3" maxlength="1500" placeholder="Что нужно автоматизировать или спроектировать"></textarea></label>
+
+        <label class="consent">
+          <input type="checkbox" name="consent" value="1" checked required>
+          <span>Даю <a href="soglasie.html" target="_blank">согласие на обработку персональных данных</a> и принимаю <a href="politika.html" target="_blank">политику конфиденциальности</a></span>
+        </label>
+
+        <button class="btn btn--accent btn--block" type="submit">Отправить заявку</button>
+        <p class="form__status" role="status" aria-live="polite" data-status></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <a class="logo logo--light" href="#top" aria-label="ModuFarm — наверх">
+        <svg class="logo__mark" width="40" height="40"><use href="#i-logo"/></svg>
+        <span class="logo__text"><span class="logo__name">ModuFarm</span><span class="logo__sub">агроробототехника</span></span>
+      </a>
+      <nav class="footer__nav" aria-label="Разделы">
+        <a href="#napravleniya">Направления</a>
+        <a href="#robot">Робот под культуру</a>
+        <a href="#sady">Проекты садов</a>
+        <a href="#etapy">Как работаем</a>
+        <a href="#dokumenty">Документы</a>
+        <a href="#zayavka">Контакты</a>
+      </nav>
+    </div>
+    <p class="footer__legal">ООО «Ключ «Гремячий» · ОГРН 1219100013362 · ИНН 9102276068<br>297061, Республика Крым, Красногвардейский р-н, с. Колодезное, Птицеводческая ул., зд. 32</p>
+    <div class="footer__bottom">
+      <span>© <span class="js-year">2026</span> ModuFarm</span>
+      <div class="footer-bottom-links">
+        <a href="politika.html">Политика конфиденциальности</a>
+        <a href="soglasie.html">Согласие на обработку данных</a>
+        <a class="footer-credit" href="https://sitomika.ru/?utm_source=modufarm&amp;utm_medium=footer&amp;utm_campaign=client-sites" target="_blank" rel="noopener">Разработано в sitomika.ru</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="cookie" data-cookie hidden>
+  <p>Сайт использует файлы cookie, чтобы корректно работать. Подробнее — в <a href="politika.html">политике конфиденциальности</a>.</p>
+  <button class="btn btn--sm btn--primary" type="button" data-cookie-ok>Понятно</button>
+</div>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

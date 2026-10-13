@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>ModuFarm — сельхозроботы и проектирование фруктовых садов</title>
-  <meta name="description" content="Разрабатываем сельхозроботов под агротехнические задачи разных культур: опыление, диагностика болезней, оценка состояния растений, обработка срезов, микроклимат теплиц. Проектируем фруктовые сады.">
+  <meta name="description" content="Разрабатываем сельхозроботов под агротехнические задачи разных культур: сбор урожая, обрезка, опыление, диагностика болезней и вредителей, анализ почвы, микроклимат теплиц. Строим теплицы с роботом на рельсах, проектируем сады.">
   <!-- ЗАПОЛНИТЬ: DOMAIN — адрес сайта (здесь, в robots.txt, sitemap.xml, config.php) -->
   <link rel="canonical" href="https://DOMAIN/">
   <meta name="theme-color" content="#0e3b2c">
@@ -32,7 +32,8 @@
     "url": "https://DOMAIN/",
     "logo": "https://DOMAIN/img/apple-touch-icon.png",
     "taxID": "9102276068",
-    "telephone": "+7-929-660-44-24",
+    "telephone": ["+7-929-660-44-24", "+7-978-594-26-02"],
+    "email": "shmyrinandrey7777@yandex.ru",
     "address": {
       "@type": "PostalAddress",
       "postalCode": "297061",
@@ -41,7 +42,7 @@
       "addressLocality": "с. Колодезное",
       "streetAddress": "Птицеводческая ул., зд. 32"
     },
-    "description": "Разработка сельскохозяйственных роботов под агротехнические задачи и проектирование фруктовых садов."
+    "description": "Разработка сельскохозяйственных роботов и программ управления под агротехнические задачи, строительство теплиц с роботизированной системой, проектирование фруктовых садов."
   }
   </script>
 </head>
@@ -61,7 +62,12 @@
   <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></symbol>
   <symbol id="i-cut" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.6 7.6 20 16M8.6 16.4 20 8"/></symbol>
   <symbol id="i-climate" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H3z"/><path d="M10 13v3.5a2 2 0 1 0 2 0V13"/><path d="M15 14h3M15 17h3"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-fruit" viewBox="0 0 24 24"><path d="M12 8c-1.5-1.6-4-2-5.7-.6C4.4 9 4.2 12.4 5.6 15.6 7 18.8 9.4 21 12 20c2.6 1 5-1.2 6.4-4.4 1.4-3.2 1.2-6.6-.7-8.2C16 6 13.5 6.4 12 8z"/><path d="M12 8c0-2 .6-3.6 2-5M12 6c-1.6-1.6-3.6-1.8-4.8-1"/></symbol>
+  <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21V9"/><path d="M12 13c-3.6 0-6-2.4-6-6 3.6 0 6 2.4 6 6zM12 9c0-3.3 2.2-5.5 5.5-5.5 0 3.3-2.2 5.5-5.5 5.5z"/><path d="m16 15 4 4M20 15l-4 4"/></symbol>
+  <symbol id="i-bug" viewBox="0 0 24 24"><rect x="8" y="7" width="8" height="13" rx="4"/><path d="M12 7v13M9.5 7a2.5 2.5 0 0 1 5 0M10 4 8.5 2.5M14 4l1.5-1.5M8 11H4M8 15.5H4.5M16 11h4M16 15.5h3.5"/></symbol>
+  <symbol id="i-soil" viewBox="0 0 24 24"><path d="M3 13h18M3 17h18M3 21h18"/><path d="M12 13V8"/><path d="M12 9c-2.5 0-4-1.5-4-4 2.5 0 4 1.5 4 4zM12 9c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></symbol>
+  <symbol id="i-arrow"viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
   <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
@@ -76,8 +82,8 @@
     <nav class="nav" data-nav aria-label="Разделы">
       <a href="#napravleniya">Направления</a>
       <a href="#robot">Роботы</a>
+      <a href="#teplicy">Теплицы</a>
       <a href="#sady">Сады</a>
-      <a href="#etapy">Этапы</a>
       <a href="#dokumenty">Документы</a>
       <a href="#zayavka">Контакты</a>
       <a class="nav__phone" href="tel:+79296604424" data-goal="phone_click">+7 (929) 660-44-24</a>
@@ -97,14 +103,14 @@
       <div class="hero__text">
         <p class="eyebrow eyebrow--light">Агроробототехника · Республика Крым</p>
         <h1 class="hero__title">Сельхозроботы под задачи вашей культуры и&nbsp;проекты фруктовых садов</h1>
-        <p class="hero__lead">Разрабатываем роботов под конкретные агротехнические операции — от опыления цветков до ранней диагностики болезней. Проектируем сады, в которых технике удобно работать.</p>
+        <p class="hero__lead">Разрабатываем роботов под конкретные агротехнические операции — от опыления цветков до сбора урожая. Строим теплицы с роботом на рельсах и проектируем сады, в которых технике удобно работать.</p>
         <div class="hero__actions">
           <a class="btn btn--accent" href="#zayavka" data-topic="Сельхозробот под задачу">Обсудить задачу <svg class="ic"><use href="#i-arrow"/></svg></a>
           <a class="btn btn--ghost-light" href="#zayavka" data-topic="Проект фруктового сада">Заказать проект сада</a>
         </div>
         <ul class="hero__facts">
-          <li><b>6</b><span>программ для ЭВМ зарегистрированы в Роспатенте</span></li>
-          <li><b>2</b><span>направления: робототехника и&nbsp;проектирование садов</span></li>
+          <li><b>10</b><span>собственных программ управления для роботов и&nbsp;теплиц</span></li>
+          <li><b>6</b><span>из них уже зарегистрированы в&nbsp;Роспатенте</span></li>
         </ul>
       </div>
 
@@ -195,90 +201,182 @@
     </div>
   </section>
 
-  <!-- ===== Направления (по свидетельствам Роспатента) ===== -->
+  <!-- ===== Направления: 10 программ (тексты — по рефератам программ; 6 со свидетельствами Роспатента) ===== -->
   <section class="section" id="napravleniya">
     <div class="container">
       <div class="section__head">
         <p class="eyebrow">Направления разработки</p>
         <h2 class="section__title">Какие задачи в саду и теплице мы автоматизируем</h2>
-        <p class="section__lead">Под каждую операцию у нас своя программа управления. Все шесть зарегистрированы в Реестре программ для ЭВМ Роспатента.</p>
+        <p class="section__lead">Под каждую операцию — своя программа управления. Всего их десять, шесть уже зарегистрированы в Реестре программ для ЭВМ Роспатента. Средства защиты и нормы удобрений программы за агронома не назначают: они показывают, где и что нужно проверить.</p>
       </div>
 
-      <div class="cards">
-        <article class="card reveal">
-          <div class="card__icon"><svg class="ic"><use href="#i-route"/></svg></div>
-          <h3 class="card__title">Навигация по саду</h3>
-          <p>Расчёт оптимального маршрута роботизированной тележки по участку: в каком порядке объезжать ряды, чтобы не тратить время и заряд впустую.</p>
-          <a class="card__doc" href="docs/svidetelstvo-2026689317.pdf" target="_blank" rel="noopener">Свидетельство № 2026689317</a>
-        </article>
-        <article class="card reveal">
-          <div class="card__icon"><svg class="ic"><use href="#i-flower"/></svg></div>
-          <h3 class="card__title">Искусственное опыление</h3>
-          <p>Управление опылением цветков плодовых культур. Помогает, когда погода или нехватка пчёл ставят урожай под угрозу.</p>
-          <a class="card__doc" href="docs/svidetelstvo-2026689318.pdf" target="_blank" rel="noopener">Свидетельство № 2026689318</a>
-        </article>
-        <article class="card reveal">
-          <div class="card__icon"><svg class="ic"><use href="#i-leafscan"/></svg></div>
-          <h3 class="card__title">Ранняя диагностика болезней</h3>
-          <p>Распознавание заболеваний растений на ранней стадии и подбор средств защиты, пока болезнь не распространилась по саду.</p>
-          <a class="card__doc" href="docs/svidetelstvo-2026689950.pdf" target="_blank" rel="noopener">Свидетельство № 2026689950</a>
-        </article>
-        <article class="card reveal">
-          <div class="card__icon"><svg class="ic"><use href="#i-pulse"/></svg></div>
-          <h3 class="card__title">Оценка состояния растений</h3>
-          <p>Общая оценка состояния растений и определение, какие агротехнические мероприятия нужны и где именно.</p>
-          <a class="card__doc" href="docs/svidetelstvo-2026689951.pdf" target="_blank" rel="noopener">Свидетельство № 2026689951</a>
-        </article>
-        <article class="card reveal">
-          <div class="card__icon"><svg class="ic"><use href="#i-cut"/></svg></div>
-          <h3 class="card__title">Дезинфекция срезов</h3>
-          <p>Управление обработкой мест среза после удаления избыточных побегов плодовых культур, чтобы через срез не проникла инфекция.</p>
-          <a class="card__doc" href="docs/svidetelstvo-2026690114.pdf" target="_blank" rel="noopener">Свидетельство № 2026690114</a>
-        </article>
-        <article class="card reveal">
-          <div class="card__icon"><svg class="ic"><use href="#i-climate"/></svg></div>
-          <h3 class="card__title">Микроклимат теплицы</h3>
-          <p>Мониторинг параметров среды в тепличном комплексе и автоматическое управление исполнительными механизмами.</p>
-          <a class="card__doc" href="docs/svidetelstvo-2026689319.pdf" target="_blank" rel="noopener">Свидетельство № 2026689319</a>
-        </article>
+      <div class="cards-group">
+        <h3 class="cards-group__title">Операции робота</h3>
+        <div class="cards cards--4">
+          <article class="card reveal">
+            <div class="card__icon"><svg class="ic"><use href="#i-fruit"/></svg></div>
+            <h4 class="card__title">Сбор урожая</h4>
+            <p>Распознаёт плод и плодоножку в объёме, оценивает спелость и свободное место, рассчитывает точку среза. Робот подводит ловитель, срезает плод и проверяет результат.</p>
+            <span class="card__doc card__doc--plain">Собственная разработка</span>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg class="ic"><use href="#i-sprout"/></svg></div>
+            <h4 class="card__title">Обрезка побегов</h4>
+            <p>Находит избыточные побеги плодовых деревьев и кустарников: учитывает направление роста, пересечения, болезни и плодоношение. Решает, что срезать, что оставить, а что показать человеку.</p>
+            <span class="card__doc card__doc--plain">Собственная разработка</span>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg class="ic"><use href="#i-cut"/></svg></div>
+            <h4 class="card__title">Дезинфекция срезов</h4>
+            <p>Обрабатывает места среза после обрезки: дозирует жидкость по диаметру среза, следит за давлением и форсункой и не обрабатывает один срез дважды.</p>
+            <a class="card__doc" href="docs/svidetelstvo-2026690114.pdf" target="_blank" rel="noopener">Свидетельство № 2026690114</a>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg class="ic"><use href="#i-flower"/></svg></div>
+            <h4 class="card__title">Искусственное опыление</h4>
+            <p>Выбирает раскрытые и готовые к опылению цветки, проверяет условия среды и не возвращается к уже обработанным. Задаёт очерёдность операций.</p>
+            <a class="card__doc" href="docs/svidetelstvo-2026689318.pdf" target="_blank" rel="noopener">Свидетельство № 2026689318</a>
+          </article>
+        </div>
+      </div>
+
+      <div class="cards-group">
+        <h3 class="cards-group__title">Диагностика</h3>
+        <div class="cards cards--4">
+          <article class="card reveal">
+            <div class="card__icon"><svg class="ic"><use href="#i-leafscan"/></svg></div>
+            <h4 class="card__title">Болезни на ранней стадии</h4>
+            <p>Замечает ранние признаки заболеваний и следит, как меняются симптомы. Подсказывает, какие растения осмотреть первыми и какие меры защиты рассмотреть.</p>
+            <a class="card__doc" href="docs/svidetelstvo-2026689950.pdf" target="_blank" rel="noopener">Свидетельство № 2026689950</a>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg class="ic"><use href="#i-bug"/></svg></div>
+            <h4 class="card__title">Вредители</h4>
+            <p>Распознаёт вредоносных насекомых и считает плотность заселения. Решает: понаблюдать ещё, продолжить мониторинг или пора проводить защитное мероприятие.</p>
+            <span class="card__doc card__doc--plain">Собственная разработка</span>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg class="ic"><use href="#i-pulse"/></svg></div>
+            <h4 class="card__title">Состояние растений</h4>
+            <p>Сводит в общий индекс крону, окраску листьев, влажность у корней, нагрузку плодами и риски болезней. Даёт список нужных проверок по каждому растению и по участку.</p>
+            <a class="card__doc" href="docs/svidetelstvo-2026689951.pdf" target="_blank" rel="noopener">Свидетельство № 2026689951</a>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg class="ic"><use href="#i-soil"/></svg></div>
+            <h4 class="card__title">Анализ почвы</h4>
+            <p>Разбирает pH, азот, фосфор, калий, влажность и засоленность, считает дефицит относительно целевых значений и сводит пробы по участку.</p>
+            <span class="card__doc card__doc--plain">Собственная разработка</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="cards-group">
+        <h3 class="cards-group__title">Движение и микроклимат</h3>
+        <div class="cards cards--2">
+          <article class="card reveal">
+            <div class="card__icon"><svg class="ic"><use href="#i-route"/></svg></div>
+            <h4 class="card__title">Маршрут роботизированной тележки</h4>
+            <p>Строит маршрут по карте тепличного комплекса: объезжает препятствия с учётом габаритов робота, сокращает число поворотов и выбирает выгодный порядок обхода точек.</p>
+            <a class="card__doc" href="docs/svidetelstvo-2026689317.pdf" target="_blank" rel="noopener">Свидетельство № 2026689317</a>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg class="ic"><use href="#i-climate"/></svg></div>
+            <h4 class="card__title">Климат в теплице</h4>
+            <p>Следит за температурой, влажностью, CO₂ и освещённостью, управляет отоплением, вентиляцией, увлажнением, подачей CO₂ и досветкой. При открытой вентиляции CO₂ не подаёт.</p>
+            <a class="card__doc" href="docs/svidetelstvo-2026689319.pdf" target="_blank" rel="noopener">Свидетельство № 2026689319</a>
+          </article>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ===== Робот под культуру ===== -->
-  <!-- ПОДТВЕРДИТЬ у заказчика: состав робота и подход описаны в общем виде, без ТТХ -->
+  <!-- Состав робота — по техописанию заказчика (робот на рельсовой системе) и рефератам программ, без ТТХ -->
   <section class="section section--dark" id="robot">
     <div class="container split">
       <div class="split__text">
         <p class="eyebrow eyebrow--light">Робот под культуру</p>
         <h2 class="section__title">Не универсальная машина, а&nbsp;робот под вашу задачу</h2>
-        <p class="section__lead section__lead--light">У яблони, черешни, винограда и тепличного огурца разные схемы посадки, высота кроны и уязвимые места. Поэтому мы начинаем не с каталога, а с культуры и операции, которую нужно взять на себя.</p>
+        <p class="section__lead section__lead--light">У лимона, яблони и черешни разные схемы посадки, высота кроны и уязвимые места. Поэтому робот собирается из модулей: его можно перенастроить под другую культуру и другую операцию — обрезку, обработку, сбор урожая.</p>
         <a class="btn btn--accent" href="#zayavka" data-topic="Сельхозробот под задачу">Рассказать о своей задаче <svg class="ic"><use href="#i-arrow"/></svg></a>
       </div>
       <ol class="layers">
-        <li class="layers__item reveal"><span class="layers__num">01</span><div><h3>Платформа</h3><p>Ходовая часть под ширину междурядий, рельеф и покрытие участка.</p></div></li>
-        <li class="layers__item reveal"><span class="layers__num">02</span><div><h3>Зрение и датчики</h3><p>Камеры и сенсоры, которые видят то, что важно для конкретной культуры: цветки, листья, побеги, срезы.</p></div></li>
-        <li class="layers__item reveal"><span class="layers__num">03</span><div><h3>Рабочий инструмент</h3><p>Навесной модуль под операцию: опыление, обработка, мониторинг.</p></div></li>
-        <li class="layers__item reveal"><span class="layers__num">04</span><div><h3>Программа управления</h3><p>Собственное программное обеспечение: маршрут, распознавание, решения о мероприятиях.</p></div></li>
+        <li class="layers__item reveal"><span class="layers__num">01</span><div><h3>Платформа</h3><p>Рельсовая система в теплице или ходовая часть под междурядья сада. Маршрут строится с учётом препятствий и плотности посадок.</p></div></li>
+        <li class="layers__item reveal"><span class="layers__num">02</span><div><h3>Зрение и датчики</h3><p>Камеры и нейросети распознают плоды, зрелость, побеги, признаки болезней и вредителей. Датчики собирают данные о микроклимате и состоянии растений.</p></div></li>
+        <li class="layers__item reveal"><span class="layers__num">03</span><div><h3>Рабочий инструмент</h3><p>Модуль под операцию: секатор с ловителем плодов, форсунка для обработки срезов, опылитель.</p></div></li>
+        <li class="layers__item reveal"><span class="layers__num">04</span><div><h3>Программа управления</h3><p>Собственное программное обеспечение с блокировками и аварийным остановом. Агроном видит, что делает робот, и может вмешаться в любой момент.</p></div></li>
       </ol>
     </div>
   </section>
 
+  <!-- ===== Теплицы под ключ ===== -->
+  <!-- По техописанию заказчика. Цены, сроки, урожайность и расчёты оттуда не публикуем: они считались под конкретного покупателя. -->
+  <section class="section section--soft" id="teplicy">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow">Теплицы под ключ</p>
+        <h2 class="section__title">Теплица, в которой работает робот</h2>
+        <p class="section__lead">Строим многоблочные теплицы по технологии Миттлайдера с роботизированной машиной на рельсовой системе. Робот ухаживает за деревьями и собирает урожай, агроном контролирует процесс и при необходимости корректирует работу систем.</p>
+      </div>
+      <div class="features">
+        <div class="feature reveal">
+          <h3>Конструкция</h3>
+          <ul>
+            <li>Асимметричная крыша с вентиляционным проёмом вдоль конька</li>
+            <li>Блоки 10 × 100 м без перегородок: стометровые ряды и одинаковый микроклимат</li>
+            <li>Каркас из оцинкованного профиля, сборка на болтах и заклёпках — без сварки и спецтехники</li>
+            <li>Поликарбонат или двойная плёнка с воздушной прослойкой</li>
+          </ul>
+        </div>
+        <div class="feature reveal">
+          <h3>Микроклимат</h3>
+          <ul>
+            <li>Боковая и коньковая вентиляция, фрамуги открываются автоматически по датчикам</li>
+            <li>Климатические экраны от перегрева и ночных теплопотерь</li>
+            <li>Светодиодная досветка</li>
+            <li>Датчики температуры, влажности и CO₂, архив показаний и сигнал при отклонениях</li>
+          </ul>
+        </div>
+        <div class="feature reveal">
+          <h3>Полив</h3>
+          <ul>
+            <li>Капельный полив к каждому дереву</li>
+            <li>Туманообразование под кровлей по отдельной магистрали</li>
+            <li>Водоподготовка: накопительный бак и фильтры, чтобы не засорялись капельницы</li>
+          </ul>
+        </div>
+        <div class="feature reveal">
+          <h3>Робот на рельсах</h3>
+          <ul>
+            <li>Камеры распознают плоды, зрелость и болезни деревьев</li>
+            <li>Обрезка, обработка и сбор урожая по заданным алгоритмам</li>
+            <li>Через камеры робота за выращиванием можно следить в реальном времени</li>
+          </ul>
+        </div>
+      </div>
+      <div class="features__foot">
+        <p>Проект теплицы готовим в том числе под требования грантовых комиссий и банков.</p>
+        <a class="btn btn--primary" href="#zayavka" data-topic="Теплица под ключ">Обсудить теплицу <svg class="ic"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== Проектирование садов ===== -->
-  <!-- ПОДТВЕРДИТЬ у заказчика: состав проекта сада (пункты ниже — типовые разделы) -->
+  <!-- Состав проекта — по техописанию заказчика (проект закладки многолетних насаждений, тома I–III) -->
   <section class="section" id="sady">
     <div class="container split split--reverse">
       <div class="split__text">
         <p class="eyebrow">Проектирование садов</p>
-        <h2 class="section__title">Проектируем фруктовые сады, готовые к&nbsp;технике</h2>
-        <p class="section__lead">Сад закладывают на десятилетия. Если в проекте сразу учесть, как по нему будет ходить техника и роботы, потом не придётся перестраивать ряды и опоры.</p>
+        <h2 class="section__title">Проекты садов — под технику и&nbsp;под субсидии</h2>
+        <p class="section__lead">Сад закладывают на десятилетия. Мы сразу учитываем, как по нему будут ходить техника и роботы, и готовим проект закладки многолетних насаждений в составе, который нужен для субсидий на закладку и уход. Проектируем и для закрытого грунта — вместе с теплицей.</p>
         <ul class="ticks">
-          <li><svg class="ic"><use href="#i-check"/></svg>Схема посадки и ширина междурядий под технику</li>
-          <li><svg class="ic"><use href="#i-check"/></svg>Размещение рядов с учётом рельефа участка</li>
-          <li><svg class="ic"><use href="#i-check"/></svg>Опорные конструкции и формировка кроны</li>
-          <li><svg class="ic"><use href="#i-check"/></svg>Орошение и подъезды к рядам</li>
-          <li><svg class="ic"><use href="#i-check"/></svg>Проходы для роботизированной техники и точки обслуживания</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Обследование участка: почвы, климат, вода, пригодность под культуру и сорт</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Сорта и подвои, схемы посадки, подготовка почвы</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Орошение, удобрение, защита растений, формирование кроны</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Сметы: сводный расчёт, объектные и локальные</li>
+          <li><svg class="ic"><use href="#i-check"/></svg>Чертежи: генплан с кварталами, размещение сортов, перенос проекта в&nbsp;натуру</li>
         </ul>
+        <p class="sro">Состоим в саморегулируемой организации в области инженерных изысканий и подготовки проектной документации (СРО-П-152-30032010).</p>
         <a class="btn btn--primary" href="#zayavka" data-topic="Проект фруктового сада">Заказать проект сада <svg class="ic"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="plan reveal" aria-hidden="true">
@@ -317,7 +415,7 @@
       <div class="audience">
         <div class="audience__item reveal"><h3>Садоводческие хозяйства</h3><p>Когда не хватает рабочих рук на сезонные операции и важно не пропустить начало болезни.</p></div>
         <div class="audience__item reveal"><h3>Тепличные комплексы</h3><p>Когда нужно держать микроклимат под контролем без постоянного ручного вмешательства.</p></div>
-        <div class="audience__item reveal"><h3>Закладка нового сада</h3><p>Когда сад только планируется и его можно сразу спроектировать под механизацию.</p></div>
+        <div class="audience__item reveal"><h3>Закладка нового сада</h3><p>Когда сад только планируется: его можно сразу спроектировать под механизацию и подготовить документы для субсидии.</p></div>
         <div class="audience__item reveal"><h3>Питомники и опытные участки</h3><p>Когда нужно регулярно оценивать состояние большого числа растений.</p></div>
       </div>
     </div>
@@ -334,7 +432,7 @@
       <ol class="steps">
         <li class="steps__item reveal"><span class="steps__num">1</span><h3>Обсуждаем задачу</h3><p>Культура, площадь, операция, которую нужно автоматизировать, или участок под будущий сад.</p></li>
         <li class="steps__item reveal"><span class="steps__num">2</span><h3>Изучаем участок</h3><p>Схема посадки, междурядья, рельеф, условия в теплице.</p></li>
-        <li class="steps__item reveal"><span class="steps__num">3</span><h3>Предлагаем решение</h3><p>Состав робота и программ или проект сада — с понятными этапами и сроками.</p></li>
+        <li class="steps__item reveal"><span class="steps__num">3</span><h3>Предлагаем решение</h3><p>Состав робота и программ, теплица или проект сада — с понятными этапами и сроками.</p></li>
         <li class="steps__item reveal"><span class="steps__num">4</span><h3>Разрабатываем и настраиваем</h3><p>Адаптируем технику и программы под вашу культуру и условия.</p></li>
         <li class="steps__item reveal"><span class="steps__num">5</span><h3>Сопровождаем</h3><p>Помогаем на старте работы и дорабатываем по результатам сезона.</p></li>
       </ol>
@@ -413,13 +511,10 @@
         <h2 class="section__title">Расскажите, какую задачу нужно решить</h2>
         <p class="section__lead section__lead--light">Опишите культуру, площадь и операцию, которую хотите автоматизировать, или участок под будущий сад. Мы свяжемся с вами и предложим, с чего начать.</p>
         <ul class="lead__contacts">
-          <li><a href="tel:+79296604424" data-goal="phone_click"><svg class="ic"><use href="#i-phone"/></svg>+7 (929) 660-44-24</a></li>
+          <li><a href="tel:+79296604424" data-goal="phone_click"><svg class="ic"><use href="#i-phone"/></svg>+7 (929) 660-44-24</a> <span class="lead__note">есть в MAX</span></li>
+          <li><a href="tel:+79785942602" data-goal="phone_click"><svg class="ic"><use href="#i-phone"/></svg>+7 (978) 594-26-02</a></li>
+          <li class="lead__mail"><a href="mailto:shmyrinandrey7777@yandex.ru" data-goal="email_click"><svg class="ic"><use href="#i-mail"/></svg>shmyrinandrey7777@yandex.ru</a></li>
         </ul>
-        <!-- ЗАПОЛНИТЬ: e-mail заказчика. Раскомментировать, когда будет.
-        <ul class="lead__contacts">
-          <li><a href="mailto:EMAIL">EMAIL</a></li>
-        </ul>
-        -->
         <p class="lead__addr">ООО «Ключ «Гремячий» · Республика Крым, Красногвардейский район</p>
       </div>
 
@@ -431,7 +526,7 @@
           <legend>Что вас интересует</legend>
           <label class="chip"><input type="radio" name="topic" value="Сельхозробот под задачу" checked><span>Сельхозробот</span></label>
           <label class="chip"><input type="radio" name="topic" value="Проект фруктового сада"><span>Проект сада</span></label>
-          <label class="chip"><input type="radio" name="topic" value="Автоматизация теплицы"><span>Теплица</span></label>
+          <label class="chip"><input type="radio" name="topic" value="Теплица под ключ"><span>Теплица</span></label>
           <label class="chip"><input type="radio" name="topic" value="Другое"><span>Другое</span></label>
         </fieldset>
 
@@ -464,13 +559,14 @@
       <nav class="footer__nav" aria-label="Разделы">
         <a href="#napravleniya">Направления</a>
         <a href="#robot">Роботы</a>
+        <a href="#teplicy">Теплицы</a>
         <a href="#sady">Сады</a>
         <a href="#etapy">Этапы</a>
         <a href="#dokumenty">Документы</a>
         <a href="#zayavka">Контакты</a>
       </nav>
     </div>
-    <p class="footer__contact"><a href="tel:+79296604424" data-goal="phone_click">+7 (929) 660-44-24</a></p>
+    <p class="footer__contact"><a href="tel:+79296604424" data-goal="phone_click">+7 (929) 660-44-24</a> <a href="tel:+79785942602" data-goal="phone_click">+7 (978) 594-26-02</a> <a class="footer__mail" href="mailto:shmyrinandrey7777@yandex.ru" data-goal="email_click">shmyrinandrey7777@yandex.ru</a></p>
     <p class="footer__legal">ООО «Ключ «Гремячий» · ОГРН 1219100013362 · ИНН 9102276068<br>297061, Республика Крым, Красногвардейский р-н, с. Колодезное, Птицеводческая ул., зд. 32</p>
     <div class="footer__bottom">
       <span>© <span class="js-year">2026</span> ModuFarm</span>

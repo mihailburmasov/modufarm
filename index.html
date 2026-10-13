@@ -114,90 +114,11 @@
         </ul>
       </div>
 
-      <div class="hero__art" aria-hidden="true">
-        <!-- Иллюстрация: роботизированная тележка в междурядье сада. Нарисована для сайта, не фото продукции. -->
-        <svg viewBox="0 0 560 480" class="hero__svg">
-          <defs>
-            <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#174c39"/><stop offset="1" stop-color="#0e3b2c"/>
-            </linearGradient>
-            <linearGradient id="g-ground" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#2d6b3e"/><stop offset="1" stop-color="#1d5232"/>
-            </linearGradient>
-            <radialGradient id="g-scan" cx="0.5" cy="0" r="1">
-              <stop offset="0" stop-color="#b8f07a" stop-opacity=".55"/><stop offset="1" stop-color="#b8f07a" stop-opacity="0"/>
-            </radialGradient>
-            <clipPath id="c-card"><rect x="0" y="0" width="560" height="480" rx="28"/></clipPath>
-          </defs>
-          <g clip-path="url(#c-card)">
-            <rect width="560" height="480" fill="url(#g-sky)"/>
-            <circle cx="430" cy="92" r="46" fill="#f4c56a" opacity=".9"/>
-            <circle cx="430" cy="92" r="70" fill="#f4c56a" opacity=".12"/>
-            <path d="M0 230 Q140 190 280 214 T560 200 V480 H0z" fill="#1f5a37"/>
-            <path d="M0 262 L560 250 V480 H0z" fill="url(#g-ground)"/>
-            <!-- ряды в перспективе -->
-            <g stroke="#3f8a4d" stroke-width="2" opacity=".55">
-              <path d="M280 252 L-60 480"/><path d="M280 252 L80 480"/><path d="M280 252 L210 480"/>
-              <path d="M280 252 L350 480"/><path d="M280 252 L480 480"/><path d="M280 252 L620 480"/>
-            </g>
-            <!-- деревья: дальний план -->
-            <g class="trees-far">
-              <g transform="translate(222 236)"><rect x="-1.5" y="0" width="3" height="10" fill="#4a3426"/><circle r="11" cy="-4" fill="#3e9450"/></g>
-              <g transform="translate(250 238)"><rect x="-1.5" y="0" width="3" height="9" fill="#4a3426"/><circle r="10" cy="-4" fill="#47a058"/></g>
-              <g transform="translate(310 238)"><rect x="-1.5" y="0" width="3" height="9" fill="#4a3426"/><circle r="10" cy="-4" fill="#47a058"/></g>
-              <g transform="translate(338 236)"><rect x="-1.5" y="0" width="3" height="10" fill="#4a3426"/><circle r="11" cy="-4" fill="#3e9450"/></g>
-            </g>
-            <!-- средний план -->
-            <g>
-              <g transform="translate(168 276)"><rect x="-3" y="0" width="6" height="22" fill="#4a3426"/><circle r="24" cy="-10" fill="#3a8b4b"/><circle r="15" cx="-10" cy="-20" fill="#4ea85e"/><circle cx="8" cy="-6" r="3.5" fill="#e8553a"/><circle cx="-12" cy="-4" r="3.5" fill="#e8553a"/></g>
-              <g transform="translate(392 276)"><rect x="-3" y="0" width="6" height="22" fill="#4a3426"/><circle r="24" cy="-10" fill="#3a8b4b"/><circle r="15" cx="10" cy="-20" fill="#4ea85e"/><circle cx="-8" cy="-4" r="3.5" fill="#e8553a"/><circle cx="12" cy="-10" r="3.5" fill="#e8553a"/></g>
-            </g>
-            <!-- ближний план -->
-            <g>
-              <g transform="translate(70 360)"><rect x="-6" y="0" width="12" height="60" fill="#4a3426"/><circle r="56" cy="-24" fill="#327f43"/><circle r="36" cx="-24" cy="-48" fill="#45a055"/><circle r="26" cx="26" cy="-40" fill="#3d944f"/><circle cx="20" cy="-10" r="7" fill="#e8553a"/><circle cx="-26" cy="-14" r="7" fill="#e8553a"/><circle cx="-4" cy="-56" r="7" fill="#f07a4a"/></g>
-              <g transform="translate(492 360)"><rect x="-6" y="0" width="12" height="60" fill="#4a3426"/><circle r="56" cy="-24" fill="#327f43"/><circle r="36" cx="24" cy="-48" fill="#45a055"/><circle r="26" cx="-26" cy="-40" fill="#3d944f"/><circle cx="-20" cy="-10" r="7" fill="#e8553a"/><circle cx="26" cy="-14" r="7" fill="#e8553a"/></g>
-            </g>
-            <!-- маршрут -->
-            <path class="hero__route" d="M280 470 C280 420 282 360 280 300" stroke="#b8f07a" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round" fill="none"/>
-            <!-- робот -->
-            <g class="hero__robot" transform="translate(280 392)">
-              <ellipse cx="0" cy="54" rx="92" ry="12" fill="#0b2f22" opacity=".45"/>
-              <!-- скан-луч -->
-              <path class="hero__beam" d="M44 -64 L118 -120 L136 -60 Z" fill="url(#g-scan)"/>
-              <!-- мачта и камера -->
-              <rect x="30" y="-70" width="8" height="52" rx="3" fill="#cfd8d3"/>
-              <rect x="22" y="-86" width="30" height="20" rx="6" fill="#e9efe9"/>
-              <circle cx="44" cy="-76" r="5.5" fill="#0e3b2c"/><circle cx="44" cy="-76" r="2.4" fill="#b8f07a"/>
-              <!-- манипулятор -->
-              <path d="M-36 -22 L-58 -64 L-30 -96" stroke="#e9efe9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              <circle cx="-58" cy="-64" r="7" fill="#f4c56a"/><circle cx="-36" cy="-22" r="7" fill="#f4c56a"/>
-              <path d="M-30 -96 l-8 -10 M-30 -96 l10 -6" stroke="#e9efe9" stroke-width="4" stroke-linecap="round"/>
-              <!-- корпус -->
-              <rect x="-74" y="-26" width="148" height="56" rx="14" fill="#f2f4ee"/>
-              <rect x="-74" y="-26" width="148" height="18" rx="9" fill="#e2e8df"/>
-              <rect x="-56" y="-2" width="62" height="16" rx="5" fill="#0e3b2c"/>
-              <rect x="-50" y="3" width="14" height="6" rx="2" fill="#b8f07a"/><rect x="-32" y="3" width="8" height="6" rx="2" fill="#7fc25a"/><rect x="-20" y="3" width="20" height="6" rx="2" fill="#3e9450"/>
-              <circle cx="46" cy="6" r="7" fill="#e8553a"/>
-              <!-- колёса -->
-              <g fill="#1b2a24"><circle cx="-50" cy="38" r="17"/><circle cx="50" cy="38" r="17"/></g>
-              <g fill="#5b6b63"><circle cx="-50" cy="38" r="6"/><circle cx="50" cy="38" r="6"/></g>
-            </g>
-            <!-- метки данных -->
-            <g class="hero__tag" transform="translate(386 168)">
-              <rect width="142" height="54" rx="12" fill="#f2f4ee"/>
-              <circle cx="20" cy="27" r="7" fill="#3e9450"/>
-              <text x="36" y="23" font-family="Onest, sans-serif" font-size="11" fill="#5c6f66">Состояние кроны</text>
-              <text x="36" y="40" font-family="Onest, sans-serif" font-size="13" font-weight="700" fill="#0e3b2c">норма</text>
-            </g>
-            <g class="hero__tag hero__tag--2" transform="translate(30 132)">
-              <rect width="150" height="54" rx="12" fill="#f2f4ee"/>
-              <circle cx="20" cy="27" r="7" fill="#f4c56a"/>
-              <text x="36" y="23" font-family="Onest, sans-serif" font-size="11" fill="#5c6f66">Ряд 14, дерево 32</text>
-              <text x="36" y="40" font-family="Onest, sans-serif" font-size="13" font-weight="700" fill="#0e3b2c">опыление</text>
-            </g>
-          </g>
-        </svg>
-      </div>
+      <figure class="hero__art">
+        <!-- Фото: Unsplash (rjk3O3jTc8o, лицензия Unsplash). Это не объект заказчика — заменить на его фото, когда будут. -->
+        <img class="hero__photo" src="img/hero-sad-1120.webp" srcset="img/hero-sad-700.webp 700w, img/hero-sad-1120.webp 1120w" sizes="(max-width: 1040px) 92vw, 540px" width="1120" height="960" alt="Ряды плодовых деревьев на шпалере в интенсивном саду" fetchpriority="high">
+        <figcaption class="hero__caption">Шпалерный сад: ровные ряды и&nbsp;междурядья, по которым удобно ходить технике</figcaption>
+      </figure>
     </div>
   </section>
 

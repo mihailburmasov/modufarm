@@ -85,17 +85,9 @@ p { margin: 0; }
 .hero__facts li { display: flex; align-items: center; gap: 14px; }
 .hero__facts b { font: 600 52px/1 var(--f-head); letter-spacing: -.04em; font-variant-numeric: tabular-nums; color: var(--c-lime); }
 .hero__facts span { font-size: 14px; line-height: 1.4; color: rgba(255, 255, 255, .72); }
-.hero__art { position: relative; }
-.hero__svg { width: 100%; height: auto; border-radius: 28px; box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .6); }
-.hero__route { animation: route 1.6s linear infinite; }
-.hero__beam { animation: beam 3.2s ease-in-out infinite; transform-origin: 44px -76px; }
-.hero__robot { animation: bob 4s ease-in-out infinite; }
-.hero__tag { animation: float 6s ease-in-out infinite; }
-.hero__tag--2 { animation-delay: -3s; }
-@keyframes route { to { stroke-dashoffset: -28; } }
-@keyframes beam { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
-@keyframes bob { 0%, 100% { transform: translate(280px, 392px); } 50% { transform: translate(280px, 389px); } }
-@keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+.hero__art { position: relative; margin: 0; }
+.hero__photo { width: 100%; height: auto; aspect-ratio: 7 / 6; object-fit: cover; border-radius: 28px; background: #1d5232; box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .6); }
+.hero__caption { position: absolute; left: 18px; right: 18px; bottom: 18px; max-width: 360px; padding: 12px 16px; border-radius: 14px; background: rgba(14, 59, 44, .82); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); color: rgba(255, 255, 255, .9); font-size: 14px; line-height: 1.4; }
 
 @media (min-width: 1041px) {
   .hero { display: flex; align-items: center; min-height: 100vh; min-height: 100svh; }
@@ -330,7 +322,7 @@ p { margin: 0; }
   .hero__lead { font-size: 17px; }
   .hero__actions .btn { width: 100%; }
   .hero__facts { grid-template-columns: 1fr; gap: 14px; }
-  .hero__facts b { font-size: 42px; min-width: 34px; }
+  .hero__facts b { flex: none; min-width: 1.4em; font-size: 42px; }
   .cards, .audience, .steps, .features { grid-template-columns: 1fr; }
   .cards-group + .cards-group { margin-top: 36px; }
   .features__foot .btn { width: 100%; }

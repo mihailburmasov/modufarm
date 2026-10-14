@@ -1,0 +1,45 @@
+# Превью на GitHub Pages: сайт собирается из data/ тем же PHP-сборщиком, что и на хостинге.
+# Pages не выполняет PHP — форма заявки и админка работают только на настоящем хостинге.
+# В настройках репозитория: Settings → Pages → Source: GitHub Actions.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: php app/bin/build.php
+        env:
+          SITE_URL: https://mihailburmasov.github.io
+          SITE_BASE: /modufarm
+      # PHP-заглушки и настройки Apache на Pages не нужны
+      - name: Clean
+        run: rm -rf dist/admin dist/lead.php dist/.htaccess dist/.user.ini && touch dist/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,6 +1,13 @@
-# Журнал заявок (персональные данные клиентов) — только на сервере
-data/*.csv
+# Собранный сайт — производная от data/, собирается php app/bin/build.php
+dist/
+# Пароль админки, сессии, заявки (персональные данные), история правок, корзина — только на сервере / локально
+storage/
+# Локальные и серверные настройки, доступ к FTP
+app/config.local.php
+app/config.server.php
+app/deploy.local.php
 
 .DS_Store
 Thumbs.db
 node_modules/
+*.log

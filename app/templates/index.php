@@ -3,7 +3,7 @@
 // Строки, где PHP-тег стоит в конце, теряют перевод строки — поэтому управляющие теги стоят с начала строки.
 $s = S::$site;
 $h = $s['hero']; $md = $s['modules']; $pc = $s['principle']; $gh = $s['greenhouse']; $rt = $s['robotics'];
-$fr = $s['frame']; $sp = $s['specs']; $st = $s['steps']; $dc = $s['documents']; $iso = $s['iso'];
+$fr = $s['frame']; $sp = $s['specs']; $st = $s['steps']; $dc = $s['documents']; $iso = $s['iso']; $sro = $s['sro'];
 ?>
   <section class="hero">
     <div class="hero__grid-bg" aria-hidden="true"></div>
@@ -325,29 +325,35 @@ $fr = $s['frame']; $sp = $s['specs']; $st = $s['steps']; $dc = $s['documents']; 
 <?php endforeach ?>
       </div>
 <?php endif ?>
-<?php if (empty($iso['hidden'])): ?>
+<?php
+// Отдельные карточки документов: сертификат ИСО и выписка из реестра СРО (поле => подпись строки)
+$cards = [
+    [$iso, ['num' => 'Номер', 'valid' => 'Действует', 'scope' => 'Область', 'issuer' => 'Выдан']],
+    [$sro, ['org' => 'СРО', 'member' => 'Номер в реестре', 'right' => 'Право', 'extract' => 'Выписка']],
+];
+foreach ($cards as [$c, $rows]): if (!empty($c['hidden'])) continue;
+?>
 
       <div class="iso reveal">
-        <a class="iso__img" href="<?= pdf_url($iso['pdf']) ?>" target="_blank" rel="noopener">
-          <?= doc_img($iso['preview'], '260px') ?>
+        <a class="iso__img" href="<?= pdf_url($c['pdf']) ?>" target="_blank" rel="noopener">
+          <?= doc_img($c['preview'], '260px') ?>
 
         </a>
         <div class="iso__text">
-          <p class="eyebrow"><?= esc($iso['eyebrow']) ?></p>
-          <h3><?= esc($iso['title']) ?></h3>
+          <p class="eyebrow"><?= esc($c['eyebrow']) ?></p>
+          <h3><?= esc($c['title']) ?></h3>
           <dl class="iso__list">
-            <div><dt>Номер</dt><dd><?= esc($iso['num']) ?></dd></div>
-            <div><dt>Действует</dt><dd><?= esc($iso['valid']) ?></dd></div>
-            <div><dt>Область</dt><dd><?= esc($iso['scope']) ?></dd></div>
-            <div><dt>Выдан</dt><dd><?= esc($iso['issuer']) ?></dd></div>
+<?php foreach ($rows as $key => $label): if (($c[$key] ?? '') === '') continue; ?>
+            <div><dt><?= $label ?></dt><dd><?= esc($c[$key]) ?></dd></div>
+<?php endforeach ?>
           </dl>
-<?php if ($iso['noteText'] !== ''): ?>
-          <p class="iso__note"><?= esc($iso['noteText']) ?><?php if ($iso['noteLinkUrl'] !== ''): ?> <a href="<?= esc($iso['noteLinkUrl']) ?>" target="_blank" rel="noopener"><?= esc($iso['noteLinkText'] ?: $iso['noteLinkUrl']) ?></a><?php endif ?>.</p>
+<?php if ($c['noteText'] !== ''): ?>
+          <p class="iso__note"><?= esc($c['noteText']) ?><?php if ($c['noteLinkUrl'] !== ''): ?> <a href="<?= esc($c['noteLinkUrl']) ?>" target="_blank" rel="noopener"><?= esc($c['noteLinkText'] ?: $c['noteLinkUrl']) ?></a><?php endif ?>.</p>
 <?php endif ?>
-          <a class="btn btn--ghost" href="<?= pdf_url($iso['pdf']) ?>" target="_blank" rel="noopener"><svg class="ic"><use href="#i-doc"/></svg><?= esc($iso['btnLabel']) ?></a>
+          <a class="btn btn--ghost" href="<?= pdf_url($c['pdf']) ?>" target="_blank" rel="noopener"><svg class="ic"><use href="#i-doc"/></svg><?= esc($c['btnLabel']) ?></a>
         </div>
       </div>
-<?php endif ?>
+<?php endforeach ?>
     </div>
   </section>
 

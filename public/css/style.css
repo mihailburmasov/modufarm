@@ -195,10 +195,11 @@ p { margin: 0; }
 .doc__num { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--c-green); }
 .doc__name { font-size: 14px; line-height: 1.4; }
 .iso { display: grid; grid-template-columns: 260px 1fr; gap: 48px; align-items: center; margin-top: 64px; padding: 40px; border-radius: 28px; background: #fff; }
+.iso + .iso { margin-top: 24px; }
 .iso__img img { width: 100%; height: auto; border-radius: 10px; box-shadow: var(--shadow); }
 .iso__text h3 { font: 600 27px/1.15 var(--f-head); letter-spacing: -.025em; }
 .iso__list { display: grid; gap: 10px; margin: 22px 0; }
-.iso__list div { display: grid; grid-template-columns: 110px 1fr; gap: 16px; }
+.iso__list div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; }
 .iso__list dt { color: var(--c-muted); font-size: 15px; }
 .iso__list dd { margin: 0; font-size: 15.5px; }
 .iso__note { margin-bottom: 24px; color: var(--c-muted); font-size: 15px; }

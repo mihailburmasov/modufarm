@@ -33,10 +33,11 @@ function validate_data(): void
         if ($num !== '' && !isset(S::$docByNum[$num])) $err[] = "программа «{$card['title']}» ссылается на свидетельство № $num, которого нет в разделе «Документы»";
     }
     if (!all_program_cards()) $err[] = 'в разделе «Направления» нет ни одной программы';
-    $iso = $s['iso'];
-    if (empty($iso['hidden'])) {
-        if (($iso['pdf'] ?? '') === '' || !is_file($pdfDir . $iso['pdf'])) $err[] = 'сертификат ИСО: не выбран файл PDF';
-        if (!$photoOk($iso['preview'] ?? null)) $err[] = 'сертификат ИСО: не выбрана картинка-превью';
+    foreach (['iso' => 'сертификат ИСО', 'sro' => 'выписка СРО'] as $key => $label) {
+        $c = $s[$key];
+        if (!empty($c['hidden'])) continue;
+        if (($c['pdf'] ?? '') === '' || !is_file($pdfDir . $c['pdf'])) $err[] = "$label: не выбран файл PDF";
+        if (!$photoOk($c['preview'] ?? null)) $err[] = "$label: не выбрана картинка-превью";
     }
     foreach (['header', 'footer'] as $w) foreach ($s['nav'][$w] as $n) if (!isset(SECTION_ANCHORS[$n['target'] ?? ''])) $err[] = "пункт меню «{$n['label']}» ведёт в неизвестный раздел";
     if (!$s['lead']['topics']) $err[] = 'в форме заявки нужна хотя бы одна тема';

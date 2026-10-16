@@ -29,6 +29,7 @@ function photo_usage(string $id): array
     $site = doc_get('site.json');
     if (($site['hero']['photo'] ?? '') === $id) $uses[] = 'фото первого экрана';
     if (($site['iso']['preview'] ?? '') === $id) $uses[] = 'превью сертификата ИСО';
+    if (($site['sro']['preview'] ?? '') === $id) $uses[] = 'превью выписки СРО';
     foreach (doc_get('documents.json')['items'] as $d) if (($d['preview'] ?? '') === $id) $uses[] = 'превью свидетельства № ' . $d['num'];
     return $uses;
 }
@@ -168,7 +169,9 @@ function pdf_dir(): string { return rtrim(cfg('public_dir'), '/\\') . '/docs'; }
 function pdf_usage(string $name): array
 {
     $uses = [];
-    if ((doc_get('site.json')['iso']['pdf'] ?? '') === $name) $uses[] = 'сертификат ИСО';
+    $site = doc_get('site.json');
+    if (($site['iso']['pdf'] ?? '') === $name) $uses[] = 'сертификат ИСО';
+    if (($site['sro']['pdf'] ?? '') === $name) $uses[] = 'выписка СРО';
     foreach (doc_get('documents.json')['items'] as $d) if (($d['pdf'] ?? '') === $name) $uses[] = 'свидетельство № ' . $d['num'];
     return $uses;
 }

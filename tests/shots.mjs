@@ -5,13 +5,23 @@ const OUT = process.env.SHOTS || 'shots';
 fs.mkdirSync(OUT, { recursive: true });
 const routes = (process.argv[2] || '#/,#/section/hero,#/section/programs,#/section/documents,#/section/menu,#/photos,#/pdfs,#/leads,#/settings').split(',');
 const width = Number(process.argv[3] || 1360), height = Number(process.argv[4] || 900);
-const chrome = spawn('C:/Program Files/Google/Chrome/Application/chrome.exe', ['--headless=new', '--remote-debugging-port=9333', '--user-data-dir=' + OUT + '/prof', '--no-first-run', `--window-size=${width},${height}`, 'about:blank'], { stdio: 'ignore' });
+const portFile = OUT + '/prof/DevToolsActivePort';
+fs.rmSync(portFile, { force: true }); // от прошлого запуска
+const chrome = spawn('C:/Program Files/Google/Chrome/Application/chrome.exe', ['--headless=new', '--remote-debugging-port=0', '--user-data-dir=' + OUT + '/prof', '--no-first-run', `--window-size=${width},${height}`, 'about:blank'], { stdio: 'ignore' });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+// Порт выбирает сам Chrome (0) и пишет его в DevToolsActivePort своего профиля. Так скрипт подключается
+// только к своему браузеру: на известных портах (9333 и др.) может работать чужой Chrome другой сессии.
 let ws;
-for (let i = 0; i < 40; i++) {
-  try { const l = await (await fetch('http://127.0.0.1:9333/json/list')).json(); const p = l.find(x => x.type === 'page'); if (p) { ws = new WebSocket(p.webSocketDebuggerUrl); break; } } catch { }
+for (let i = 0; i < 120 && !ws; i++) {
   await sleep(250);
+  try {
+    const port = fs.readFileSync(portFile, 'utf8').split(/\r?\n/)[0].trim();
+    const l = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
+    const p = l.find(x => x.type === 'page');
+    if (p) ws = new WebSocket(p.webSocketDebuggerUrl);
+  } catch { }
 }
+if (!ws) { chrome.kill(); throw new Error('не удалось подключиться к своему Chrome'); }
 await new Promise(r => ws.addEventListener('open', r, { once: true }));
 let id = 0; const pending = new Map(); const errors = [];
 ws.addEventListener('message', ev => {

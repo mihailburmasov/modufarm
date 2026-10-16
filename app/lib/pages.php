@@ -11,7 +11,12 @@ function validate_data(): void
     $photoOk = fn($id) => is_string($id) && isset(S::$photoIndex[$id]);
 
     if (!phones()) $err[] = 'нужен хотя бы один телефон';
-    if (!$photoOk($s['hero']['photo'] ?? null)) $err[] = 'фото первого экрана не найдено в медиатеке';
+    foreach (['hero' => 'первый экран главной', 'robotsPage' => 'первый экран страницы «Роботы»', 'modules' => 'блоки 10 × 100 м', 'principle' => 'устройство теплицы', 'robotics' => 'роботизированный уход', 'frame' => 'каркас'] as $key => $name) {
+        $id = $s[$key]['photo'] ?? null;
+        if (in_array($key, ['principle', 'robotics', 'frame'], true) && $id === '') continue; // без картинки можно
+        if (!$photoOk($id)) $err[] = "фото в разделе «{$name}» не найдено в медиатеке";
+    }
+    if (!isset(SECTION_ANCHORS[$s['hero']['btnSecondTarget'] ?? ''])) $err[] = 'вторая кнопка первого экрана ведёт в неизвестный раздел';
 
     $nums = [];
     foreach (S::$docs as $i => $d) {
@@ -38,9 +43,32 @@ function validate_data(): void
     if ($err) throw new RuntimeException('Проверьте данные: ' . implode('; ', array_unique($err)) . '.');
 }
 
+// Страница с разделами в общей оболочке (шапка с меню, блок заявки, подвал)
+function section_page(string $page, string $tplName, array $meta, string $edit, string $loc): void
+{
+    S::$page = $page;
+    $html = tpl('layout', [
+        'title' => $meta['title'], 'description' => $meta['description'],
+        'ogTitle' => $meta['ogTitle'] ?? $meta['title'], 'ogDescription' => $meta['ogDescription'] ?? $meta['description'],
+        'loc' => $loc, 'edit' => $edit, 'ld' => $page === 'index', 'body' => tpl($tplName),
+    ]);
+    S::$page = 'index';
+    emit_page('/' . PAGES[$page][0], $html, ['loc' => $loc]);
+}
+
 function page_home(): void
 {
-    emit_page('/index.html', tpl('index'), ['loc' => '/']);
+    section_page('index', 'index', S::$site['meta'], '', '/');
+}
+
+function page_robots(): void
+{
+    if (page_on('roboty')) section_page('roboty', 'roboty', S::$site['robotsPage']['meta'], 'section/robotsPage', '/roboty.html');
+}
+
+function page_gardens(): void
+{
+    if (page_on('sady')) section_page('sady', 'sady', S::$site['gardensPage']['meta'], 'section/gardens', '/sady.html');
 }
 
 function inner_page(string $file, array $o): void

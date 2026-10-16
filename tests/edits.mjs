@@ -28,7 +28,7 @@ try {
   const rev = (await api('revisions')).items.find(x => x.file === 'site.json');
   r = await api('revision/restore', { id: rev.id });
   check(r.ok && snap()['site.json'] === original['site.json'], 'откат по истории вернул site.json');
-  check(page().includes('Сельхозроботы под задачи вашей культуры и&nbsp;проекты фруктовых садов'), 'на сайте прежний заголовок');
+  check(page().includes('<h1 class="hero__title">Промышленные теплицы для круглогодичного урожая</h1>'), 'на сайте прежний заголовок');
 
   // 3. Неверные значения: несуществующее свидетельство, пустая иконка, плохая дата
   s = await S('programs');
@@ -49,7 +49,7 @@ try {
   check(!r.ok && /2026689317/.test(r.error), 'удаление используемого свидетельства остановлено', r.error);
   check(snap()['documents.json'] === original['documents.json'], 'documents.json вернулся как был');
 
-  // 5. Новое свидетельство: PDF + превью, привязка к программе — цифра на первом экране растёт
+  // 5. Новое свидетельство: PDF + превью, привязка к программе — цифра на первом экране «Роботов» растёт
   const fd = new FormData();
   fd.append('file', new Blob(['%PDF-1.4\n%тест\n'], { type: 'application/pdf' }), 'Свидетельство 2026700001.pdf');
   const up = await api('pdf/upload', null, fd);
@@ -74,7 +74,7 @@ try {
   s = await S('programs');
   s.values['site.json#programs.groups'][0].cards[0].doc = '2026700001';
   r = await save('programs', s.values);
-  check(r.ok && page().includes('<li><b>7</b><span>из них уже зарегистрированы'), 'программа получила свидетельство, на первом экране 7', r.message || r.error);
+  check(r.ok && page('roboty.html').includes('<li><b>7</b><span>из них уже зарегистрированы'), 'программа получила свидетельство, на первом экране «Роботов» 7', r.message || r.error);
   const del = await api('pdf/delete', { name: up.name });
   check(!del.ok && /используется/.test(del.error), 'используемый PDF удалить нельзя', del.error);
 
@@ -88,13 +88,29 @@ try {
   check(r.ok && r.message === 'Изменений нет', 'пустая новая карточка пропущена', r.message || r.error);
   s.values['site.json#programs.groups'][2].cards[2] = { title: 'Новая', icon: 'bug', text: 'Текст', doc: '' };
   r = await save('programs', s.values);
-  check(r.ok && page().includes('class="cards cards--3"') && page().includes('<li><b>11</b>'), 'три карточки в группе — сетка на 3, всего 11');
+  check(r.ok && page('roboty.html').includes('class="cards cards--3"') && page('roboty.html').includes('<li><b>11</b>'), 'три карточки в группе — сетка на 3, всего 11');
 
-  // 7. Скрыть раздел — пропадают и раздел, и пункты меню
+  // 7. Скрыть раздел — пропадают и раздел, и пункты меню (на всех страницах)
   s = await S('robot');
   s.values['site.json#robot.hidden'] = true;
   r = await save('robot', s.values);
-  check(r.ok && !page().includes('id="robot"') && !page().includes('href="#robot"'), 'скрытый раздел и его пункты меню пропали');
+  check(r.ok && !page('roboty.html').includes('id="robot"') && !page('roboty.html').includes('href="#robot"') && !page().includes('roboty.html#robot'), 'скрытый раздел и его пункты меню пропали');
+  s = await S('principle');
+  s.values['site.json#principle.hidden'] = true;
+  r = await save('principle', s.values);
+  check(r.ok && !page().includes('id="princip"') && !page().includes('href="#princip"') && !page('roboty.html').includes('index.html#princip'), 'скрытый раздел главной пропал вместе с меню и второй кнопкой первого экрана');
+
+  // 7а. Скрыть страницу «Сады» — файла нет, ссылок и карточки на главной нет
+  s = await S('gardens');
+  s.values['site.json#gardensPage.hidden'] = true;
+  r = await save('gardens', s.values);
+  check(r.ok && !existsSync('dist/sady.html') && !page().includes('sady.html') && !page('roboty.html').includes('sady.html'), 'скрытая страница «Сады» убрана вместе со ссылками', r.message || r.error);
+  s.values['site.json#gardensPage.hidden'] = false;
+  r = await save('gardens', s.values);
+  check(r.ok && existsSync('dist/sady.html') && page().includes('href="sady.html"'), 'страница «Сады» вернулась');
+
+  // 7б. Тема заявки по умолчанию — своя на каждой странице
+  check(/value="Теплица под ключ" checked/.test(page()) && /value="Сельхозробот под задачу" checked/.test(page('roboty.html')) && /value="Проект фруктового сада" checked/.test(page('sady.html')), 'в форме отмечена тема своей страницы');
 
   // 8. Телефоны: пометка сохраняется, ссылка tel: считается сама
   s = await S('company');

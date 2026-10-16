@@ -17,17 +17,32 @@ final class S
     public static array $photos = [];       // папка => [фото]
     public static array $photoIndex = [];   // id => фото
     public static array $structure = [];
+    public static string $page = 'index';   // какая страница собирается сейчас (ключ PAGES)
 }
 
-// Якоря разделов главной: куда могут вести пункты меню (ключ раздела site.json => якорь)
+// Страницы с разделами: ключ => [файл, ключ site.json, который их скрывает ('' — не скрывается)]
+const PAGES = [
+    'index' => ['index.html', ''],
+    'roboty' => ['roboty.html', 'robotsPage'],
+    'sady' => ['sady.html', 'gardensPage'],
+];
+
+// Куда могут вести пункты меню: якорь => [ключ раздела site.json, название в админке, страница, ведёт в начало страницы]
+// Страница '' — раздел есть на каждой странице (блок заявки), ссылка ведёт на него же на текущей странице.
 const SECTION_ANCHORS = [
-    'napravleniya' => ['programs', 'Направления (программы)'],
-    'robot' => ['robot', 'Робот под культуру'],
-    'teplicy' => ['greenhouse', 'Теплицы под ключ'],
-    'sady' => ['gardens', 'Проектирование садов'],
-    'etapy' => ['steps', 'Этапы работы'],
-    'dokumenty' => ['documents', 'Документы'],
-    'zayavka' => ['lead', 'Заявка и контакты'],
+    'moduli' => ['modules', 'Теплицы: блоки 10 × 100 м', 'index', false],
+    'princip' => ['principle', 'Теплицы: устройство и вентиляция', 'index', false],
+    'teplicy' => ['greenhouse', 'Теплицы: системы', 'index', false],
+    'robotizaciya' => ['robotics', 'Теплицы: роботизированный уход', 'index', false],
+    'konstrukciya' => ['frame', 'Теплицы: каркас', 'index', false],
+    'proekt' => ['specs', 'Теплицы: проект 1 га', 'index', false],
+    'etapy' => ['steps', 'Этапы работы', 'index', false],
+    'dokumenty' => ['documents', 'Документы', 'index', false],
+    'zayavka' => ['lead', 'Заявка и контакты', '', false],
+    'roboty' => ['robotsPage', 'Страница «Роботы и программы»', 'roboty', true],
+    'napravleniya' => ['programs', 'Роботы: направления (программы)', 'roboty', false],
+    'robot' => ['robot', 'Роботы: робот под культуру', 'roboty', false],
+    'sady' => ['gardensPage', 'Страница «Проектирование садов»', 'sady', true],
 ];
 
 function load_site_data(): void
@@ -83,6 +98,15 @@ function doc_img(string $id, string $sizes): string
     return '<img src="' . img_url($id) . '"' . $srcset . ' width="' . $p['w'] . '" height="' . $p['h'] . '" loading="lazy" alt="' . esc($p['alt']) . '">';
 }
 function pdf_url(string $file): string { return u('docs/' . rawurlencode($file)); }
+// Фото первого экрана с подписью поверх
+function hero_figure(string $id, string $caption): string
+{
+    $p = photo($id);
+    return '      <figure class="hero__art">' . "\n"
+        . '        <img class="hero__photo" src="' . img_url($id) . '" srcset="' . img_url($id, '-sm') . ' ' . $p['sw'] . 'w, ' . img_url($id) . ' ' . $p['w'] . 'w" sizes="(max-width: 1040px) 92vw, 540px" width="' . $p['w'] . '" height="' . $p['h'] . '" alt="' . esc($p['alt']) . '" fetchpriority="high" style="height:auto">' . "\n"
+        . ($caption !== '' ? '        <figcaption class="hero__caption">' . esc($caption) . '</figcaption>' . "\n" : '')
+        . '      </figure>' . "\n";
+}
 
 // ---------- телефоны и реквизиты ----------
 function phones(): array { return S::$company['phones']; }
@@ -131,10 +155,23 @@ function date_ru(string $ymd): string
 
 // ---------- разделы главной ----------
 function section_on(string $key): bool { return empty(S::$site[$key]['hidden']); }
-// Пункты меню, которые ведут на видимые разделы
+function page_on(string $page): bool { return PAGES[$page][1] === '' || section_on(PAGES[$page][1]); }
+// Адрес страницы сайта относительно текущей
+function page_url(string $page): string { return u(PAGES[$page][0]); }
+// Ссылка пункта меню: на своей странице — якорь, на другой — файл страницы с якорем
+function nav_href(string $target): string
+{
+    [, , $page, $top] = SECTION_ANCHORS[$target];
+    if ($page === '' || $page === S::$page) return $top ? '#top' : '#' . $target;
+    return page_url($page) . ($top ? '' : '#' . $target);
+}
+// Пункты меню, которые ведут на видимые разделы видимых страниц
 function nav_items(string $which): array
 {
-    return array_values(array_filter(S::$site['nav'][$which], fn($n) => isset(SECTION_ANCHORS[$n['target']]) && section_on(SECTION_ANCHORS[$n['target']][0])));
+    return array_values(array_filter(S::$site['nav'][$which], function ($n) {
+        $a = SECTION_ANCHORS[$n['target']] ?? null;
+        return $a && section_on($a[0]) && ($a[2] === '' || page_on($a[2]));
+    }));
 }
 function all_program_cards(): array
 {

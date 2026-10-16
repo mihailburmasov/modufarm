@@ -27,7 +27,7 @@ function render_site(): array
     Build::$pages = []; Build::$sitemap = [];
     load_site_data();
     validate_data();
-    page_home(); page_privacy(); page_consent(); page_thanks(); page_not_found();
+    page_home(); page_robots(); page_gardens(); page_privacy(); page_consent(); page_thanks(); page_not_found();
 
     $files = [];
     foreach (Build::$pages as $pth => $html) $files[page_file($pth)] = $html;

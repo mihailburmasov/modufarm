@@ -6,12 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Вход — управление сайтом <?= esc($brand) ?></title>
+<link rel="icon" href="<?= esc(S::$base) ?>/favicon.ico" sizes="any">
 <link rel="stylesheet" href="<?= esc($prefix) ?>/asset/admin.css?v=<?= filemtime(__DIR__ . '/admin.css') ?>">
 </head>
 <body class="login-page">
 <?= sprite_svg() ?>
 <form class="login" method="post" action="<?= esc($prefix) ?>/login">
-  <div class="login__logo"><?= LOGO_MARK ?><b><?= esc($brand) ?></b><span>управление сайтом</span></div>
+  <div class="login__logo"><?= logo_mark() ?><b><?= esc($brand) ?></b><span>управление сайтом</span></div>
   <?php if (!admin_account()): ?>
     <p class="alert alert--err">Учётная запись ещё не создана. Создайте её командой <code>php app/bin/admin-setup.php</code>.</p>
   <?php else: ?>

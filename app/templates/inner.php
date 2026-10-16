@@ -14,7 +14,8 @@ $c = S::$company; $p0 = phone0();
 <?php else: ?>
   <meta name="description" content="<?= esc($description) ?>">
 <?php endif ?>
-  <link rel="icon" href="<?= u('favicon.svg') ?>" type="image/svg+xml">
+  <link rel="icon" href="<?= u('favicon.ico') ?>" sizes="any">
+  <link rel="icon" href="<?= u('img/icon-192.png') ?>" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="<?= u('img/apple-touch-icon.png') ?>">
   <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
@@ -22,7 +23,7 @@ $c = S::$company; $p0 = phone0();
 <header class="header header--solid">
   <div class="container header__inner">
     <a class="logo" href="<?= u('index.html') ?>" aria-label="<?= esc($c['brand']) ?> — на главную">
-      <img class="logo__mark" src="<?= u('img/logo-light.svg') ?>" width="40" height="40" alt="">
+      <img class="logo__mark" src="<?= u('img/logo-mark.png') ?>" width="40" height="40" alt="">
       <span class="logo__text"><span class="logo__name"><?= esc($c['brand']) ?></span><span class="logo__sub"><?= esc($c['brandSub']) ?></span></span>
     </a>
 <?php if ($headerContacts): ?>

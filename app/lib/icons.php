@@ -2,15 +2,6 @@
 // SVG-иконки. На сайте — спрайт <symbol id="i-имя">, вызов через <use href="#i-имя">.
 declare(strict_types=1);
 
-// Знак ModuFarm: лист на тёмной плашке
-const LOGO_SYMBOL = '  <symbol id="i-logo" viewBox="0 0 40 40">
-    <rect x="1" y="1" width="38" height="38" rx="11" fill="var(--logo-bg, #0e3b2c)"/>
-    <path d="M11 29c0-9.5 6.5-17 18-18-0.6 11.6-8.2 18-18 18z" fill="var(--logo-leaf, #9fdc6a)"/>
-    <path d="M11 29 22.5 17.5" stroke="var(--logo-bg, #0e3b2c)" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="22.5" cy="17.5" r="2.6" fill="var(--logo-bg, #0e3b2c)"/>
-    <circle cx="22.5" cy="17.5" r="1.2" fill="var(--logo-leaf, #9fdc6a)"/>
-  </symbol>';
-
 // Иконки сайта 24×24 (внутренняя разметка символа). Порядок — как в спрайте.
 const ICONS = [
     'route' => '<path d="M5 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM19 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M7 17h7a3 3 0 0 0 0-6H10a3 3 0 0 1 0-6h7"/>',
@@ -51,7 +42,7 @@ const UI_ICONS = [
 // Спрайт сайта — в начале каждой страницы
 function site_sprite(): string
 {
-    $out = '<svg width="0" height="0" style="position:absolute" aria-hidden="true">' . "\n" . LOGO_SYMBOL . "\n";
+    $out = '<svg width="0" height="0" style="position:absolute" aria-hidden="true">' . "\n";
     foreach (ICONS as $k => $inner) $out .= '  <symbol id="i-' . $k . '" viewBox="0 0 24 24">' . $inner . "</symbol>\n";
     return $out . '</svg>';
 }
@@ -62,7 +53,7 @@ function sprite_svg(): string
     $symbols = '';
     foreach (ICONS as $k => $inner) $symbols .= '<symbol id="i-' . $k . '" viewBox="0 0 24 24">' . $inner . '</symbol>';
     foreach (UI_ICONS as $k => $d) $symbols .= '<symbol id="i-' . $k . '" viewBox="0 0 24 24"><path d="' . $d . '"/></symbol>';
-    return '<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' . $symbols . LOGO_SYMBOL . '</svg>';
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' . $symbols . '</svg>';
 }
 
 function icon(string $name, string $cls = ''): string
@@ -70,5 +61,8 @@ function icon(string $name, string $cls = ''): string
     return '<svg class="ic' . ($cls !== '' ? ' ' . $cls : '') . '"><use href="#i-' . $name . '"/></svg>';
 }
 
-// Знак в шапке админки
-const LOGO_MARK = '<svg class="logo__mark" width="40" height="40" aria-hidden="true"><use href="#i-logo"/></svg>';
+// Знак (эмблема «Ключ «Гремячий») в шапке админки — картинка сайта public/img/logo-mark.png (PNG, а не WebP: img/*.webp при заливке считаются фото клиента)
+function logo_mark(): string
+{
+    return '<img class="logo__mark" src="' . esc(S::$base . '/img/logo-mark.png') . '" width="40" height="40" alt="">';
+}

@@ -6,13 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Управление сайтом — <?= esc($brand) ?></title>
+<link rel="icon" href="<?= esc(S::$base) ?>/favicon.ico" sizes="any">
 <link rel="stylesheet" href="<?= esc($prefix) ?>/asset/admin.css?v=<?= filemtime(__DIR__ . '/admin.css') ?>">
 </head>
 <body>
 <?= sprite_svg() ?>
 <div class="app">
   <aside class="side" id="side">
-    <a class="side__logo" href="#/"><?= LOGO_MARK ?><span><b><?= esc($brand) ?></b><small>управление сайтом</small></span></a>
+    <a class="side__logo" href="#/"><?= logo_mark() ?><span><b><?= esc($brand) ?></b><small>управление сайтом</small></span></a>
     <nav class="side__nav" id="nav" aria-label="Разделы"></nav>
     <div class="side__foot">
       <a class="side__site" href="<?= esc(S::$base) ?>/" target="_blank" rel="noopener">Открыть сайт ↗</a>

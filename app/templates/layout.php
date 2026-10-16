@@ -23,7 +23,8 @@ $q = fn($v) => json_encode((string)$v, JSON_FLAGS | JSON_HEX_TAG);
   <meta property="og:image" content="<?= esc(abs_url('/img/og.jpg')) ?>">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="icon" href="<?= u('favicon.svg') ?>" type="image/svg+xml">
+  <link rel="icon" href="<?= u('favicon.ico') ?>" sizes="any">
+  <link rel="icon" href="<?= u('img/icon-192.png') ?>" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="<?= u('img/apple-touch-icon.png') ?>">
   <link rel="preload" href="<?= u('fonts/onest-cyr.woff2') ?>" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
@@ -36,7 +37,7 @@ $q = fn($v) => json_encode((string)$v, JSON_FLAGS | JSON_HEX_TAG);
     "name": <?= $q($c['brand']) ?>,
     "legalName": <?= $q($c['legalName']) ?>,
     "url": <?= $q(abs_url('/')) ?>,
-    "logo": <?= $q(abs_url('/img/apple-touch-icon.png')) ?>,
+    "logo": <?= $q(abs_url('/img/logo.png')) ?>,
     "taxID": <?= $q($c['inn']) ?>,
     "telephone": [<?= implode(', ', array_map(fn($p) => $q(tel_ld($p['tel'])), phones())) ?>],
     "email": <?= $q($c['email']) ?>,
@@ -63,7 +64,7 @@ $q = fn($v) => json_encode((string)$v, JSON_FLAGS | JSON_HEX_TAG);
 <header class="header" data-header>
   <div class="container header__inner">
     <a class="logo" href="<?= S::$page === 'index' ? '#top' : u('index.html') ?>" aria-label="<?= esc($c['brand']) ?> — на главную">
-      <svg class="logo__mark" width="40" height="40"><use href="#i-logo"/></svg>
+      <img class="logo__mark" src="<?= u('img/logo-mark.png') ?>" width="40" height="40" alt="">
       <span class="logo__text"><span class="logo__name"><?= esc($c['brand']) ?></span><span class="logo__sub"><?= esc($c['brandSub']) ?></span></span>
     </a>
     <nav class="nav" data-nav aria-label="Разделы">
@@ -87,7 +88,7 @@ $q = fn($v) => json_encode((string)$v, JSON_FLAGS | JSON_HEX_TAG);
   <div class="container">
     <div class="footer__top">
       <a class="logo logo--light" href="<?= S::$page === 'index' ? '#top' : u('index.html') ?>" aria-label="<?= esc($c['brand']) ?> — <?= S::$page === 'index' ? 'наверх' : 'на главную' ?>">
-        <svg class="logo__mark" width="40" height="40"><use href="#i-logo"/></svg>
+        <img class="logo__mark" src="<?= u('img/logo-mark.png') ?>" width="40" height="40" alt="">
         <span class="logo__text"><span class="logo__name"><?= esc($c['brand']) ?></span><span class="logo__sub"><?= esc($c['brandSub']) ?></span></span>
       </a>
       <nav class="footer__nav" aria-label="Разделы">

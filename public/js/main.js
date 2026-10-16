@@ -49,11 +49,39 @@
     }
   }
 
-  // Кнопки с темой заявки: выбирают нужный вариант в форме
-  document.querySelectorAll('[data-topic]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var input = document.querySelector('input[name="topic"][value="' + btn.getAttribute('data-topic') + '"]');
-      if (input) input.checked = true;
+  // Отметить тему заявки во всех формах страницы (в блоке внизу и во всплывающем окне)
+  function setTopic(topic) {
+    if (!topic) return;
+    document.querySelectorAll('input[name="topic"]').forEach(function (input) {
+      if (input.value === topic) input.checked = true;
+    });
+  }
+
+  // Всплывающее окно с формой: кнопки «Обсудить теплицу», «Заказать проект сада» и т. п. открывают форму
+  // на том же экране. Пункты меню («Контакты») по-прежнему ведут к блоку заявки внизу страницы.
+  // Если браузер не умеет <dialog>, кнопка работает как ссылка на блок заявки.
+  var modal = document.querySelector('[data-modal]');
+  var canModal = modal && typeof modal.showModal === 'function';
+  if (canModal) {
+    var opener = null;
+    var closeModal = function () { modal.close(); };
+    modal.addEventListener('close', function () {
+      document.documentElement.classList.remove('modal-open');
+      if (opener) { opener.focus({ preventScroll: true }); opener = null; }
+    });
+    // Клик по затемнённому фону закрывает окно
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    modal.querySelector('[data-modal-close]').addEventListener('click', closeModal);
+  }
+  document.querySelectorAll('a.btn[href="#zayavka"]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      setTopic(btn.getAttribute('data-topic'));
+      if (!canModal) return;
+      e.preventDefault();
+      opener = btn;
+      document.documentElement.classList.add('modal-open');
+      modal.showModal();
+      goal('form_open');
     });
   });
 

@@ -107,6 +107,8 @@ $q = fn($v) => json_encode((string)$v, JSON_FLAGS | JSON_HEX_TAG);
   <button class="btn btn--sm btn--primary" type="button" data-cookie-ok>Понятно</button>
 </div>
 
+<?= tpl('lead-modal') ?>
+
 <script src="<?= asset('js/main.js') ?>" defer></script>
 </body>
 </html>

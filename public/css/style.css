@@ -367,6 +367,21 @@ p { margin: 0; }
 .cards-more a:hover { text-decoration: underline; }
 .nav a[aria-current="page"] { color: var(--c-lime); }
 
+/* Всплывающее окно с формой заявки */
+.modal-open, .modal-open body { overflow: hidden; }
+.modal { width: min(640px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); margin: auto; padding: 0; border: 0; border-radius: 28px; background: #fff; color: var(--c-ink); box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .5); overflow: auto; overscroll-behavior: contain; }
+.modal::backdrop { background: rgba(8, 30, 22, .62); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.modal[open] { animation: modal-in .22s ease-out; }
+@keyframes modal-in { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+.modal__box { position: relative; }
+.modal__head { padding: 32px 36px 0; padding-right: 72px; }
+.modal__title { font: 600 clamp(24px, 2.4vw, 30px)/1.15 var(--f-head); letter-spacing: -.025em; }
+.modal__lead { margin-top: 10px; color: var(--c-muted); font-size: 15.5px; line-height: 1.5; }
+.modal__lead a { font-weight: 600; white-space: nowrap; text-decoration: none; }
+.modal .form { padding: 22px 36px 30px; border-radius: 0; background: transparent; }
+.modal__close { position: absolute; top: 18px; right: 18px; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: var(--c-soft); color: var(--c-ink); font-size: 20px; cursor: pointer; transition: background .2s; }
+.modal__close:hover { background: var(--c-line); }
+
 /* Появление при прокрутке */
 .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
 .js .reveal.is-in { opacity: 1; transform: none; }
@@ -439,6 +454,12 @@ p { margin: 0; }
   .specs .btn { width: 100%; }
   .more { grid-template-columns: 1fr; }
   .more__card { padding: 26px 22px; }
+  .modal { width: 100vw; max-height: calc(100dvh - 24px); margin: auto 0 0; border-radius: 24px 24px 0 0; }
+  .modal[open] { animation-name: modal-up; }
+  @keyframes modal-up { from { transform: translateY(40px); opacity: 0; } }
+  .modal__head { padding: 24px 18px 0; padding-right: 64px; }
+  .modal .form { padding: 18px 18px 24px; }
+  .modal__close { top: 14px; right: 12px; }
   .cards, .audience, .steps, .features { grid-template-columns: 1fr; }
   .cards-group + .cards-group { margin-top: 36px; }
   .features__foot .btn { width: 100%; }

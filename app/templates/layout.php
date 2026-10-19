@@ -20,7 +20,7 @@ $q = fn($v) => json_encode((string)$v, JSON_FLAGS | JSON_HEX_TAG);
   <meta property="og:title" content="<?= esc($ogTitle) ?>">
   <meta property="og:description" content="<?= esc($ogDescription) ?>">
   <meta property="og:url" content="<?= esc(abs_url($loc)) ?>">
-  <meta property="og:image" content="<?= esc(abs_url('/img/og.jpg')) ?>">
+  <meta property="og:image" content="<?= esc(abs_url('/img/og-mittrobot.jpg')) ?>">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="<?= u('favicon.ico') ?>" sizes="any">

@@ -152,11 +152,23 @@ function remote_rebuild(array $D): void
 {
     if (empty($D['deploy_key'])) { out('deploy_key не задан — пересоберите сайт на сервере вручную (кнопка в админке или php app/bin/build.php по SSH)'); return; }
     $url = rtrim($D['site_url'], '/') . '/admin/deploy-rebuild';
-    $ch = curl_init($url);
-    curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => '', CURLOPT_HTTPHEADER => ['X-Deploy-Key: ' . $D['deploy_key']], CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 60]);
-    $res = curl_exec($ch);
-    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+    // Защита хостинга (reg.ru) может ответить вместо PHP страницей <meta http-equiv="Refresh"> и поставить cookie —
+    // тогда повторяем тот же POST с полученной cookie
+    $jar = tempnam(sys_get_temp_dir(), 'ck');
+    for ($try = 1; $try <= 3; $try++) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => '', CURLOPT_HTTPHEADER => ['X-Deploy-Key: ' . $D['deploy_key']], CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 60,
+            CURLOPT_COOKIEJAR => $jar, CURLOPT_COOKIEFILE => $jar, CURLOPT_USERAGENT => 'Mozilla/5.0 (deploy.php)']);
+        // ip в deploy.local.php — идти на сервер напрямую, пока DNS домена не обновился у всех
+        if (!empty($D['ip'])) { $u = parse_url($url); curl_setopt($ch, CURLOPT_RESOLVE, [$u['host'] . ':' . ($u['port'] ?? ($u['scheme'] === 'https' ? 443 : 80)) . ':' . $D['ip']]); }
+        $res = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if (stripos((string)$res, 'http-equiv="Refresh"') === false) break;
+        out("  хостинг ответил проверкой (попытка $try), повторяю…");
+        sleep(2);
+    }
+    @unlink($jar);
     $j = json_decode((string)$res, true);
     if ($code === 200 && !empty($j['ok'])) out('Сайт на сервере пересобран: ' . $j['message']);
     else { fwrite(STDERR, "Пересборка на сервере не удалась (HTTP $code): " . substr((string)$res, 0, 300) . "\n"); exit(1); }

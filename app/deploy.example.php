@@ -8,6 +8,7 @@ return [
     'root'     => 'stroygrad.ru', // папка сайта от корня FTP (в ней лежат app, data, public_html)
     'docroot'  => 'public_html',  // корень сайта внутри этой папки
     'site_url' => 'https://stroygrad.ru',
+    // 'ip' => '1.2.3.4', // необязательно: IP сервера, пока DNS нового домена не обновился — пересборка пойдёт на него напрямую
     // тот же ключ, что deploy_key в app/config.server.php — по нему сервер пересобирает сайт после заливки
     'deploy_key' => '',
 ];

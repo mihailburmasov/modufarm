@@ -75,7 +75,7 @@ php app/bin/admin-setup.php <пароль>       # создать вход в а
 
 ## Превью на GitHub Pages
 
-`.github/workflows/pages.yml` собирает сайт из `data/` и публикует `dist/` (Settings → Pages → Source: GitHub Actions). PHP там не выполняется: форма заявки и админка работают только на хостинге.
+Выключено 19.10.2026 после запуска боевого сайта https://mittrobot.ru (вместе со сборкой `.github/workflows/pages.yml` — она в истории git, если превью снова понадобится).
 
 ## Тесты (`tests/`, нужен запущенный dev-сервер и пароль `testpass123` или `ADMIN_PASS`)
 

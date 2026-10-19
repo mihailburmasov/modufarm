@@ -5,7 +5,7 @@ $c = S::$company; $p0 = phone0();
 $q = fn($v) => json_encode((string)$v, JSON_FLAGS | JSON_HEX_TAG);
 ?>
 <!doctype html>
-<html lang="ru">
+<html lang="ru"<?= metrika_attr() ?>>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -57,7 +57,7 @@ $q = fn($v) => json_encode((string)$v, JSON_FLAGS | JSON_HEX_TAG);
 <?php endif ?>
 </head>
 <body data-edit="<?= u('admin/#/' . $edit) ?>">
-
+<?= metrika_noscript() ?>
 <?= site_sprite() ?>
 
 
@@ -104,7 +104,7 @@ $q = fn($v) => json_encode((string)$v, JSON_FLAGS | JSON_HEX_TAG);
 </footer>
 
 <div class="cookie" data-cookie hidden>
-  <p>Сайт использует файлы cookie, чтобы корректно работать. Подробнее — в <a href="<?= u('politika.html') ?>">политике конфиденциальности</a>.</p>
+  <p>Сайт использует файлы cookie<?= metrika_id() ? ' и сервис Яндекс Метрика' : '' ?>, чтобы корректно работать<?= metrika_id() ? ' и становиться удобнее' : '' ?>. Подробнее — в <a href="<?= u('politika.html') ?>">политике конфиденциальности</a>.</p>
   <button class="btn btn--sm btn--primary" type="button" data-cookie-ok>Понятно</button>
 </div>
 

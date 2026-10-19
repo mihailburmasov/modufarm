@@ -1,5 +1,6 @@
 <?php
 // Форма заявки: одна разметка для блока внизу страницы и для всплывающего окна.
+// ym-disable-keys — Метрика (вебвизор) не записывает, что вводят в эти поля.
 // $formName — откуда пришла заявка (main, roboty, sady; у окна — с приставкой modal-)
 $ld = S::$site['lead'];
 // По умолчанию отмечена тема своей страницы (если она есть среди тем), иначе первая
@@ -21,11 +22,11 @@ $checked = in_array($pageTopic, array_column($ld['topics'], 'value'), true) ? $p
         <div class="form__calc" data-calc-view hidden><b>Ваш расчёт</b><span data-calc-text></span></div>
 
         <div class="form__row">
-          <label class="field"><span>Имя</span><input type="text" name="name" autocomplete="name" maxlength="80" placeholder="Как к вам обращаться"></label>
-          <label class="field"><span>Телефон *</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required data-phone></label>
+          <label class="field"><span>Имя</span><input class="ym-disable-keys" type="text" name="name" autocomplete="name" maxlength="80" placeholder="Как к вам обращаться"></label>
+          <label class="field"><span>Телефон *</span><input class="ym-disable-keys" type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required data-phone></label>
         </div>
-        <label class="field"><span>Культура и площадь</span><input type="text" name="crop" maxlength="200" placeholder="Например: лимон, 1 га"></label>
-        <label class="field"><span>Задача</span><textarea name="message" rows="3" maxlength="1500" placeholder="Что нужно построить, автоматизировать или спроектировать"></textarea></label>
+        <label class="field"><span>Культура и площадь</span><input class="ym-disable-keys" type="text" name="crop" maxlength="200" placeholder="Например: лимон, 1 га"></label>
+        <label class="field"><span>Задача</span><textarea class="ym-disable-keys" name="message" rows="3" maxlength="1500" placeholder="Что нужно построить, автоматизировать или спроектировать"></textarea></label>
 
         <label class="consent">
           <input type="checkbox" name="consent" value="1" checked required>

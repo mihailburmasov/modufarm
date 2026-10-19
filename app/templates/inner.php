@@ -4,7 +4,7 @@
 $c = S::$company; $p0 = phone0();
 ?>
 <!doctype html>
-<html lang="ru">
+<html lang="ru"<?= metrika_attr() ?>>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -20,7 +20,7 @@ $c = S::$company; $p0 = phone0();
   <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
 </head>
 <body<?= $edit !== '' ? ' data-edit="' . u('admin/#/' . $edit) . '"' : '' ?>>
-<header class="header header--solid">
+<?= metrika_noscript() ?><header class="header header--solid">
   <div class="container header__inner">
     <a class="logo" href="<?= u('index.html') ?>" aria-label="<?= esc($c['brand']) ?> — на главную">
       <img class="logo__mark" src="<?= u('img/logo-mark.png') ?>" width="40" height="40" alt="">

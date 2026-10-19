@@ -142,6 +142,15 @@ function legal_footer_html(): string
     return esc($c['legalName']) . ' · ОГРН ' . esc($c['ogrn']) . ' · ИНН ' . esc($c['inn']) . '<br>' . esc(address_full());
 }
 // Адрес сайта в юридических текстах; пока не задан — подсвечен как незаполненный
+// Яндекс Метрика: номер счётчика в <html> (его читает main.js) и пиксель для посетителей без JS
+function metrika_id(): int { return (int)cfg('metrika_id'); }
+function metrika_attr(): string { return metrika_id() ? ' data-metrika="' . metrika_id() . '"' : ''; }
+function metrika_noscript(): string
+{
+    return metrika_id() ? '<noscript><div><img src="https://mc.yandex.ru/watch/' . metrika_id() . '" style="position:absolute; left:-9999px;" alt=""></div></noscript>' . "
+" : '';
+}
+
 function site_address_html(): string
 {
     $a = trim((string)(S::$company['siteAddress'] ?? ''));

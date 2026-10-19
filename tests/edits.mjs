@@ -131,6 +131,31 @@ try {
   const n = (await api('leads')).items.length;
   [st, j] = await lead({ website: 'spam' });
   check(j.ok && (await api('leads')).items.length === n, 'бот получил «ок», заявка не записана');
+
+  // 10. Калькулятор: цены из админки — на сайте с пробелами; отрицательная и дробная цена отклоняются;
+  // пустые цены — «по запросу»; расчёт приходит с заявкой
+  check(page().includes('id="kalkulyator"') && page().includes('<i>по запросу</i>'), 'калькулятор на главной, без цен — «по запросу»');
+  s = await S('calc');
+  s.values['site.json#calc.frame.price'] = 1250000;
+  s.values['site.json#calc.options'][0].fixed = 300000;
+  r = await save('calc', s.values);
+  check(r.ok && page().includes('data-price="1250000"') && page().includes('<i>1&nbsp;250&nbsp;000&nbsp;₽ за полублок</i>') && page().includes('<i>300&nbsp;000&nbsp;₽ на комплекс</i>'), 'цены калькулятора на сайте', r.message || r.error);
+  s.values['site.json#calc.covers'][0].price = -5;
+  r = await save('calc', s.values);
+  check(!r.ok && /не меньше 0/.test(r.error), 'отрицательная цена отклонена', r.error);
+  s.values['site.json#calc.covers'][0].price = 10.5;
+  r = await save('calc', s.values);
+  check(!r.ok && /целое/.test(r.error), 'дробная цена отклонена', r.error);
+  s.values['site.json#calc.covers'][0].price = null;
+  s.values['site.json#calc.defSpans'] = 50;
+  r = await save('calc', s.values);
+  check(!r.ok && /по умолчанию/.test(r.error), 'размер по умолчанию больше наибольшего — отказ', r.error);
+  s.values['site.json#calc.defSpans'] = 1;
+  s.values['site.json#calc.covers'] = [];
+  r = await save('calc', s.values);
+  check(!r.ok && /покрыти/.test(r.error), 'калькулятор без покрытия — отказ', r.error);
+  [st, j] = await lead({ calc: 'Теплица 20 × 100 м (2 пролёта, 4 полублока), 2 000 м². Покрытие: двойная плёнка с наддувом' });
+  check(st === 200 && j.ok && (await api('leads')).items[0].calc.startsWith('Теплица 20 × 100 м'), 'расчёт калькулятора сохранён в заявке');
 } finally {
   // вернуть данные как были, убрать загруженные тестом файлы и пересобрать
   for (const [f, t] of Object.entries(original)) writeFileSync('data/' + f, t);

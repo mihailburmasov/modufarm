@@ -40,6 +40,7 @@ $lead = [
     'topic' => $field('topic', 100),
     'crop' => $field('crop', 200),
     'message' => $field('message', 1500),
+    'calc' => $field('calc', 1000),
     'page' => $field('page', 500),
     'referrer' => $field('referrer', 500),
     'utm' => array_filter([
@@ -81,6 +82,7 @@ $lines = [
     'Культура и площадь: ' . ($lead['crop'] ?: '—'),
     'Задача: ' . ($lead['message'] ?: '—'),
 ];
+if ($lead['calc'] !== '') $lines[] = 'Расчёт на сайте: ' . $lead['calc'];
 if ($lead['utm']) { $lines[] = ''; foreach ($lead['utm'] as $k => $v) $lines[] = "$k: $v"; }
 $lines[] = 'Страница: ' . ($lead['page'] ?: '—');
 if ($lead['referrer'] !== '') $lines[] = 'Откуда пришёл: ' . $lead['referrer'];

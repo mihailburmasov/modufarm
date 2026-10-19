@@ -36,6 +36,7 @@ const SECTION_ANCHORS = [
     'robotizaciya' => ['robotics', 'Теплицы: роботизированный уход', 'index', false],
     'konstrukciya' => ['frame', 'Теплицы: каркас', 'index', false],
     'proekt' => ['specs', 'Теплицы: проект 1 га', 'index', false],
+    'kalkulyator' => ['calc', 'Теплицы: калькулятор', 'index', false],
     'etapy' => ['steps', 'Этапы работы', 'index', false],
     'dokumenty' => ['documents', 'Документы', 'index', false],
     'zayavka' => ['lead', 'Заявка и контакты', '', false],
@@ -180,6 +181,23 @@ function all_program_cards(): array
     return $out;
 }
 function cards_cols(int $n): string { return $n === 3 ? 'cards--3' : ($n >= 4 ? 'cards--4' : 'cards--2'); }
+
+// ---------- калькулятор ----------
+// Единица учёта — полублок: пролёт 10 м × длина 50 м
+const CALC_SPAN = 10;
+const CALC_LEN = 50;
+// 1250000 -> «1 250 000 ₽» (неразрывные пробелы)
+function rub(int $n): string { return number_format($n, 0, '', "\u{00A0}") . "\u{00A0}₽"; }
+// Цена позиции под её названием: за полублок и (или) разово на комплекс; без цены — «по запросу»
+function calc_price(array $x): string
+{
+    $p = $x['price'] ?? null; $f = $x['fixed'] ?? null;
+    if ($p === null && $f === null) return 'по запросу';
+    $out = [];
+    if ($p !== null) $out[] = rub($p) . ' за полублок';
+    if ($f !== null) $out[] = ($p !== null ? '+ ' : '') . rub($f) . ' на комплекс';
+    return implode(' ', $out);
+}
 
 // Шаблон страницы из app/templates: переменные передаются массивом
 function tpl(string $name, array $vars = []): string

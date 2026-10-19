@@ -70,8 +70,10 @@ function clean_value(array $fd, $v)
                 if ($s !== '' && !filter_var($s, FILTER_VALIDATE_EMAIL)) throw new InvalidArgumentException('неверный адрес почты');
                 return $s;
             case 'number':
-                if ($v === '' || $v === null) return null;
-                if (!is_numeric($v)) throw new InvalidArgumentException('нужно число');
+                if ($v === '' || $v === null) { if (!empty($fd['required'])) throw new InvalidArgumentException('поле обязательно'); return null; }
+                if (!is_numeric($v) || !preg_match('~^-?\d+$~', trim((string)$v))) throw new InvalidArgumentException('нужно целое число, без пробелов и копеек');
+                if (isset($fd['min']) && (int)$v < $fd['min']) throw new InvalidArgumentException('не меньше ' . $fd['min']);
+                if (isset($fd['max']) && (int)$v > $fd['max']) throw new InvalidArgumentException('не больше ' . $fd['max']);
                 return (int)$v;
             case 'bool': return (bool)$v;
             case 'list':

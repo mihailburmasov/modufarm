@@ -265,6 +265,91 @@ $fr = $s['frame']; $sp = $s['specs']; $st = $s['steps']; $dc = $s['documents']; 
   </section>
 
 <?php endif ?>
+<?php if (section_on('calc')):
+// Калькулятор: размеры, покрытие и системы — цены в data-атрибутах, сумму считает main.js.
+// Без JS видны цены каждой позиции.
+$cc = $s['calc'];
+$defW = min($cc['defSpans'], $cc['maxSpans']) * CALC_SPAN; $defL = min($cc['defLengths'], $cc['maxLengths']) * CALC_LEN;
+$priceAttrs = fn(array $x) => ' data-price="' . ($x['price'] ?? '') . '" data-fixed="' . ($x['fixed'] ?? '') . '"';
+?>
+  <section class="section" id="kalkulyator">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow"><?= esc($cc['eyebrow']) ?></p>
+        <h2 class="section__title"><?= esc($cc['title']) ?></h2>
+        <p class="section__lead"><?= esc($cc['lead']) ?></p>
+      </div>
+      <div class="calc" data-calc data-span="<?= CALC_SPAN ?>" data-len="<?= CALC_LEN ?>">
+        <div class="calc__main">
+          <fieldset class="calc__group">
+            <legend class="calc__legend"><span>1</span>Размер</legend>
+            <div class="calc__size">
+              <div class="calc__dims">
+                <div class="calc__dim">
+                  <label for="calc-w">Ширина</label>
+                  <div class="stepper"><button type="button" data-step="-1" aria-label="Уже">−</button><input id="calc-w" type="number" inputmode="numeric" min="<?= CALC_SPAN ?>" max="<?= $cc['maxSpans'] * CALC_SPAN ?>" step="<?= CALC_SPAN ?>" value="<?= $defW ?>" data-calc-w><span>м</span><button type="button" data-step="1" aria-label="Шире">+</button></div>
+                  <small data-calc-w-note>пролёты по <?= CALC_SPAN ?> м</small>
+                </div>
+                <div class="calc__dim">
+                  <label for="calc-l">Длина</label>
+                  <div class="stepper"><button type="button" data-step="-1" aria-label="Короче">−</button><input id="calc-l" type="number" inputmode="numeric" min="<?= CALC_LEN ?>" max="<?= $cc['maxLengths'] * CALC_LEN ?>" step="<?= CALC_LEN ?>" value="<?= $defL ?>" data-calc-l><span>м</span><button type="button" data-step="1" aria-label="Длиннее">+</button></div>
+                  <small data-calc-l-note>шаг <?= CALC_LEN ?> м</small>
+                </div>
+              </div>
+              <figure class="calc__plan" aria-hidden="true">
+                <svg data-calc-plan preserveAspectRatio="xMidYMid meet"></svg>
+                <figcaption>План сверху: клетка — полублок <?= CALC_SPAN ?> × <?= CALC_LEN ?> м</figcaption>
+              </figure>
+            </div>
+          </fieldset>
+
+          <fieldset class="calc__group">
+            <legend class="calc__legend"><span>2</span>Каркас и покрытие</legend>
+            <div class="calc__opts">
+              <div class="opt opt--fixed" data-calc-frame data-title="<?= esc($cc['frame']['title']) ?>"<?= $priceAttrs($cc['frame']) ?>>
+                <span class="opt__mark"><svg class="ic"><use href="#i-check"/></svg></span>
+                <span class="opt__body"><b><?= esc($cc['frame']['title']) ?></b><?php if ($cc['frame']['text'] !== ''): ?><span><?= esc($cc['frame']['text']) ?></span><?php endif ?><i><?= esc(calc_price($cc['frame'])) ?></i></span>
+              </div>
+<?php foreach ($cc['covers'] as $i => $x): ?>
+              <label class="opt"><input type="radio" name="calc-cover" value="<?= $i ?>" data-title="<?= esc($x['title']) ?>"<?= $priceAttrs($x) ?><?= $i === 0 ? ' checked' : '' ?>><span class="opt__mark opt__mark--radio"></span><span class="opt__body"><b><?= esc($x['title']) ?></b><?php if ($x['text'] !== ''): ?><span><?= esc($x['text']) ?></span><?php endif ?><i><?= esc(calc_price($x)) ?></i></span></label>
+<?php endforeach ?>
+            </div>
+          </fieldset>
+<?php if ($cc['options']): ?>
+
+          <fieldset class="calc__group">
+            <legend class="calc__legend"><span>3</span>Системы</legend>
+            <div class="calc__opts calc__opts--2">
+<?php foreach ($cc['options'] as $i => $x): ?>
+              <label class="opt"><input type="checkbox" name="calc-opt" value="<?= $i ?>" data-title="<?= esc($x['title']) ?>"<?= $priceAttrs($x) ?><?= !empty($x['on']) ? ' checked' : '' ?>><span class="opt__mark"><svg class="ic"><use href="#i-check"/></svg></span><span class="opt__body"><b><?= esc($x['title']) ?></b><?php if ($x['text'] !== ''): ?><span><?= esc($x['text']) ?></span><?php endif ?><i><?= esc(calc_price($x)) ?></i></span></label>
+<?php endforeach ?>
+            </div>
+          </fieldset>
+<?php endif ?>
+          <a class="calc__bar" href="#calc-sum"><span>Итого</span><b data-calc-bar-total>по запросу</b><small>к расчёту ↓</small></a>
+        </div>
+
+        <aside class="calc__sum" id="calc-sum">
+          <div class="calc__card">
+            <h3>Ваша теплица</h3>
+            <p class="calc__size-text" data-calc-size></p>
+            <ul class="calc__lines" data-calc-lines></ul>
+            <div class="calc__total"><span>Итого</span><b data-calc-total>по запросу</b></div>
+            <p class="calc__pending" data-calc-pending hidden></p>
+<?php if ($cc['priceNote'] !== ''): ?>
+            <p class="calc__price-note"><?= esc($cc['priceNote']) ?></p>
+<?php endif ?>
+            <a class="btn btn--accent btn--block" href="#zayavka" data-topic="<?= esc($cc['btnTopic']) ?>" data-calc-send><?= esc($cc['btnLabel']) ?> <svg class="ic"><use href="#i-arrow"/></svg></a>
+          </div>
+<?php if ($cc['note'] !== ''): ?>
+          <p class="note"><?= esc($cc['note']) ?></p>
+<?php endif ?>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+<?php endif ?>
 <?php if (section_on('steps')): ?>
   <section class="section" id="etapy">
     <div class="container">

@@ -448,6 +448,7 @@
         tile('#/section/hero', 'home', 'Первый экран', 'Заголовок, кнопки, фото, подписи к цифрам'),
         tile('#/section/programs', 'layers', 'Направления', 'Программы: описания, иконки, свидетельства'),
         tile('#/section/documents', 'doc', 'Документы', 'Свидетельства, сертификат ИСО, выписка СРО'),
+        tile('#/section/calc', 'layers', 'Калькулятор', 'Цены каркаса, покрытия и систем за полублок'),
         tile('#/leads', 'mail', 'Заявки', BOOT.leads ? 'Всего заявок: ' + BOOT.leads : 'Заявки с формы сайта'),
         tile('#/section/company', 'phone', 'Компания и контакты', 'Телефоны, почта, реквизиты — меняются на всём сайте'),
         tile('#/photos', 'zoom', 'Фото', 'Загрузить фото, подписи, папки')),
@@ -553,7 +554,8 @@
               h('td', { text: l.date, style: 'white-space:nowrap' }),
               h('td', {}, h('a', { href: 'tel:' + String(l.phone || '').replace(/[^\d+]/g, ''), text: l.phone, style: 'font-weight:700;white-space:nowrap' }), l.name ? [h('br'), l.name] : null),
               h('td', {}, l.topic ? h('div', { text: l.topic, style: 'font-weight:600' }) : null, l.crop ? h('div', { text: 'Культура и площадь: ' + l.crop }) : null,
-                l.message ? h('div', { text: l.message, style: 'color:#6b7078;white-space:pre-wrap' }) : null, l.muted ? h('span', { class: 'tag tag--warn', text: 'уведомление не отправлялось: много заявок с одного адреса' }) : null),
+                l.message ? h('div', { text: l.message, style: 'color:#6b7078;white-space:pre-wrap' }) : null,
+                l.calc ? h('div', { text: 'Расчёт на сайте: ' + l.calc, style: 'margin-top:4px;padding:6px 8px;border-radius:6px;background:#eef6e6;font-size:13px' }) : null, l.muted ? h('span', { class: 'tag tag--warn', text: 'уведомление не отправлялось: много заявок с одного адреса' }) : null),
               h('td', { style: gray }, Object.keys(utm).map(function (k) { return h('div', { text: k + ': ' + utm[k] }); }),
                 l.referrer ? h('div', { text: 'пришёл с: ' + l.referrer, style: 'word-break:break-all' }) : null,
                 l.page ? h('a', { href: l.page, target: '_blank', rel: 'noopener', text: 'страница ↗' }) : null));

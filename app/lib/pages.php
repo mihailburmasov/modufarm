@@ -39,6 +39,15 @@ function validate_data(): void
         if (($c['pdf'] ?? '') === '' || !is_file($pdfDir . $c['pdf'])) $err[] = "$label: не выбран файл PDF";
         if (!$photoOk($c['preview'] ?? null)) $err[] = "$label: не выбрана картинка-превью";
     }
+    $cc = $s['calc'];
+    if (section_on('calc')) {
+        if (!$cc['covers']) $err[] = 'в калькуляторе нужен хотя бы один вариант покрытия';
+        foreach (['Spans' => 'ширина', 'Lengths' => 'длина'] as $k => $label) {
+            $max = (int)($cc['max' . $k] ?? 0); $def = (int)($cc['def' . $k] ?? 0);
+            if ($max < 1) $err[] = "калькулятор: $label — наибольшее значение должно быть не меньше 1";
+            elseif ($def < 1 || $def > $max) $err[] = "калькулятор: $label по умолчанию должна быть от 1 до $max";
+        }
+    }
     foreach (['header', 'footer'] as $w) foreach ($s['nav'][$w] as $n) if (!isset(SECTION_ANCHORS[$n['target'] ?? ''])) $err[] = "пункт меню «{$n['label']}» ведёт в неизвестный раздел";
     if (!$s['lead']['topics']) $err[] = 'в форме заявки нужна хотя бы одна тема';
     if ($err) throw new RuntimeException('Проверьте данные: ' . implode('; ', array_unique($err)) . '.');

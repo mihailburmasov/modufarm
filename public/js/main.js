@@ -73,9 +73,21 @@
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     modal.querySelector('[data-modal-close]').addEventListener('click', closeModal);
   }
+  // Расчёт из калькулятора уходит с заявкой (скрытое поле calc) и виден над полями формы.
+  // Кнопки, кроме кнопки калькулятора, расчёт убирают — чтобы он не прилип к заявке на другую тему.
+  var calcSummary = null; // задаёт калькулятор ниже
+  function setCalc(text) {
+    document.querySelectorAll('[data-calc-field]').forEach(function (input) { input.value = text; });
+    document.querySelectorAll('[data-calc-view]').forEach(function (box) {
+      box.hidden = !text;
+      box.querySelector('[data-calc-text]').textContent = text;
+    });
+  }
+
   document.querySelectorAll('a.btn[href="#zayavka"]').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       setTopic(btn.getAttribute('data-topic'));
+      setCalc(btn.hasAttribute('data-calc-send') && calcSummary ? calcSummary() : '');
       if (!canModal) return;
       e.preventDefault();
       opener = btn;
@@ -103,6 +115,104 @@
     });
   } else {
     revealEls.forEach(function (el) { el.classList.add('is-in'); });
+  }
+
+  // Калькулятор теплицы: единица учёта — полублок (пролёт × длина полублока). Цена позиции —
+  // data-price за полублок + data-fixed разово на комплекс; оба пустые — позиция «по запросу».
+  var calc = document.querySelector('[data-calc]');
+  if (calc) {
+    var SPAN = Number(calc.getAttribute('data-span')), LEN = Number(calc.getAttribute('data-len'));
+    var inW = calc.querySelector('[data-calc-w]'), inL = calc.querySelector('[data-calc-l]');
+    var plan = calc.querySelector('[data-calc-plan]');
+    var money = function (n) { return new Intl.NumberFormat('ru-RU').format(n) + ' ₽'; };
+    var plural = function (n, forms) {
+      var a = n % 100, b = n % 10;
+      return forms[a > 10 && a < 20 ? 2 : b === 1 ? 0 : b >= 2 && b <= 4 ? 1 : 2];
+    };
+    var num = function (el, attr) { var v = el.getAttribute(attr); return v === '' || v === null ? null : Number(v); };
+    // Стоимость позиции на units полублоков; null — цены нет
+    var cost = function (el, units) {
+      var p = num(el, 'data-price'), f = num(el, 'data-fixed');
+      return p === null && f === null ? null : (p || 0) * units + (f || 0);
+    };
+    // Значение поля — кратное шагу и в пределах min..max
+    var snap = function (input) {
+      var step = Number(input.step), min = Number(input.min), max = Number(input.max);
+      var v = Math.round((Number(input.value) || min) / step) * step;
+      v = Math.min(max, Math.max(min, v));
+      input.value = v;
+      return v;
+    };
+    var state = {};
+
+    var drawPlan = function (spans, lens) {
+      var w = lens * LEN, h = spans * SPAN;
+      var parts = [];
+      for (var r = 0; r < spans; r++) for (var c = 0; c < lens; c++) {
+        parts.push('<rect x="' + (c * LEN) + '" y="' + (r * SPAN) + '" width="' + LEN + '" height="' + SPAN + '"/>');
+      }
+      plan.setAttribute('viewBox', '-1 -1 ' + (w + 2) + ' ' + (h + 2));
+      plan.innerHTML = '<g class="calc__cells">' + parts.join('') + '</g><rect class="calc__outline" x="0" y="0" width="' + w + '" height="' + h + '"/>';
+    };
+
+    var update = function () {
+      var w = snap(inW), l = snap(inL);
+      var spans = w / SPAN, lens = l / LEN, units = spans * lens, area = w * l;
+      calc.querySelector('[data-calc-w-note]').textContent = spans + ' ' + plural(spans, ['пролёт', 'пролёта', 'пролётов']) + ' по ' + SPAN + ' м';
+      calc.querySelector('[data-calc-l-note]').textContent = lens + ' × ' + LEN + ' м';
+      drawPlan(spans, lens);
+
+      var frame = calc.querySelector('[data-calc-frame]');
+      var cover = calc.querySelector('input[name="calc-cover"]:checked');
+      var opts = Array.prototype.slice.call(calc.querySelectorAll('input[name="calc-opt"]:checked'));
+      var items = [frame].concat(cover ? [cover] : [], opts);
+      var total = 0, known = 0, pending = [];
+      var lines = calc.querySelector('[data-calc-lines]');
+      lines.innerHTML = '';
+      items.forEach(function (el) {
+        var c = cost(el, units), title = el.getAttribute('data-title');
+        var li = document.createElement('li');
+        var t = document.createElement('span'); t.textContent = title;
+        var v = document.createElement('b'); v.textContent = c === null ? 'по запросу' : money(c);
+        if (c === null) { v.className = 'is-pending'; pending.push(title.toLowerCase()); } else { total += c; known++; }
+        li.appendChild(t); li.appendChild(v); lines.appendChild(li);
+      });
+
+      var sizeText = w + ' × ' + l + ' м · ' + new Intl.NumberFormat('ru-RU').format(area) + ' м² · ' + units + ' ' + plural(units, ['полублок', 'полублока', 'полублоков']);
+      calc.querySelector('[data-calc-size]').textContent = sizeText;
+      calc.querySelector('[data-calc-total]').textContent = calc.querySelector('[data-calc-bar-total]').textContent = known ? money(total) : 'по запросу';
+      var pend = calc.querySelector('[data-calc-pending]');
+      pend.hidden = !(known && pending.length);
+      pend.textContent = 'Без учёта позиций по запросу: ' + pending.join(', ');
+
+      state = {
+        size: w + ' × ' + l + ' м (' + spans + ' ' + plural(spans, ['пролёт', 'пролёта', 'пролётов']) + ', ' + units + ' ' + plural(units, ['полублок', 'полублока', 'полублоков']) + '), ' + new Intl.NumberFormat('ru-RU').format(area) + ' м²',
+        cover: cover ? cover.getAttribute('data-title').toLowerCase() : '',
+        opts: opts.map(function (el) { return el.getAttribute('data-title').toLowerCase(); }),
+        price: known ? money(total) + (pending.length ? ' (без учёта позиций по запросу: ' + pending.join(', ') + ')' : '') : 'по запросу'
+      };
+    };
+
+    calcSummary = function () {
+      return 'Теплица ' + state.size
+        + (state.cover ? '. Покрытие: ' + state.cover : '')
+        + '. Системы: ' + (state.opts.length ? state.opts.join(', ') : 'не выбраны')
+        + '. Ориентировочно: ' + state.price.replace(/ /g, ' ');
+    };
+
+    calc.querySelectorAll('.stepper').forEach(function (box) {
+      var input = box.querySelector('input');
+      box.querySelectorAll('[data-step]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          input.value = Number(input.value) + Number(b.getAttribute('data-step')) * Number(input.step);
+          update();
+        });
+      });
+      input.addEventListener('change', update);
+    });
+    calc.addEventListener('change', function (e) { if (e.target.name === 'calc-cover' || e.target.name === 'calc-opt') update(); });
+    calc.classList.add('is-live');
+    update();
   }
 
   // Cookie-баннер

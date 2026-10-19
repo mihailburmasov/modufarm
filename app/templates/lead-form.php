@@ -8,6 +8,7 @@ $checked = in_array($pageTopic, array_column($ld['topics'], 'value'), true) ? $p
 ?>
       <form class="form" action="<?= u('lead.php') ?>" method="post" novalidate data-form>
         <input type="hidden" name="form_name" value="<?= esc($formName) ?>">
+        <input type="hidden" name="calc" value="" data-calc-field>
         <div class="form__trap" aria-hidden="true"><label>Сайт <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
 
         <fieldset class="form__topics">
@@ -16,6 +17,8 @@ $checked = in_array($pageTopic, array_column($ld['topics'], 'value'), true) ? $p
           <label class="chip"><input type="radio" name="topic" value="<?= esc($t['value']) ?>"<?= $t['value'] === $checked ? ' checked' : '' ?>><span><?= esc($t['label'] ?: $t['value']) ?></span></label>
 <?php endforeach ?>
         </fieldset>
+
+        <div class="form__calc" data-calc-view hidden><b>Ваш расчёт</b><span data-calc-text></span></div>
 
         <div class="form__row">
           <label class="field"><span>Имя</span><input type="text" name="name" autocomplete="name" maxlength="80" placeholder="Как к вам обращаться"></label>

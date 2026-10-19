@@ -175,6 +175,37 @@ function admin_sections(): array
         button_fields($sp)
     )];
 
+    $cc = $s . 'calc.';
+    $priceSubs = [
+        k('number', 'price', 'Цена за полублок, ₽', 'Умножается на число полублоков 10 × 50 м. Целое число без пробелов, например 1250000', ['min' => 0]),
+        k('number', 'fixed', 'Разово на комплекс, ₽', 'Добавляется один раз, сколько бы ни было полублоков (например, метеостанция или котельная). Пусто в обоих полях — на сайте «по запросу»', ['min' => 0]),
+    ];
+    $sizeNum = fn(string $key, string $label, string $hint) => f('number', $cc . $key, $label, $hint, ['min' => 1, 'max' => 200, 'required' => true]);
+    $S['calc'] = ['title' => 'Калькулятор', 'group' => $G, 'url' => '/#kalkulyator', 'fields' => array_merge(
+        [hide_field($cc), head('Заголовок раздела')],
+        title_fields($cc),
+        [
+            head('Размеры', 'Единица учёта — полублок: пролёт 10 м × длина 50 м = 500 м². Посетитель выбирает ширину (сколько пролётов) и длину (сколько полублоков подряд).'),
+            $sizeNum('maxSpans', 'Ширина: наибольшее число пролётов', 'Пролёт — 10 м. Например, 20 — до 200 м'),
+            $sizeNum('maxLengths', 'Длина: наибольшее число полублоков подряд', 'Полублок — 50 м. Например, 4 — до 200 м'),
+            $sizeNum('defSpans', 'Ширина по умолчанию, пролётов', 'С этим размером калькулятор открывается'),
+            $sizeNum('defLengths', 'Длина по умолчанию, полублоков', '2 — это 100 м, один блок 10 × 100'),
+            head('Каркас', 'Входит в любую конфигурацию. Цены — в рублях, целыми числами. Пока цены нет — оставьте поля пустыми: на сайте будет «по запросу».'),
+            f('text', $cc . 'frame.title', 'Название', '', ['required' => true]),
+            f('textarea', $cc . 'frame.text', 'Что входит', '', ['rows' => 2]),
+            f('number', $cc . 'frame.price', 'Цена за полублок, ₽', 'Умножается на число полублоков. Целое число без пробелов, например 1250000', ['min' => 0]),
+            f('number', $cc . 'frame.fixed', 'Разово на комплекс, ₽', 'Добавляется один раз на весь комплекс. Пусто — не добавляется', ['min' => 0]),
+            head('Покрытие', 'Посетитель выбирает один вариант. Первый вариант выбран заранее.'),
+            f('items', $cc . 'covers', 'Варианты покрытия', '', ['itemName' => 'Вариант', 'item' => array_merge([k('text', 'title', 'Название', '', ['required' => true]), k('textarea', 'text', 'Описание', '', ['rows' => 2])], $priceSubs)]),
+            head('Системы', 'Посетитель отмечает нужные галочками. Лучше всего — те же системы, что в разделе «Системы теплицы».'),
+            f('items', $cc . 'options', 'Системы', '', ['itemName' => 'Система', 'collapsed' => true, 'item' => array_merge([k('text', 'title', 'Название', '', ['required' => true]), k('textarea', 'text', 'Описание', '', ['rows' => 2])], $priceSubs, [k('bool', 'on', 'Отмечена заранее')])]),
+            head('Под итогом'),
+            f('text', $cc . 'priceNote', 'Строка под суммой', 'Например: Цены с НДС, действуют до 31.12.2026. Пусто — без строки'),
+            f('textarea', $cc . 'note', 'Сноска', 'Мелким шрифтом под кнопкой', ['rows' => 2]),
+        ],
+        button_fields($cc)
+    )];
+
     $rp = $s . 'robotsPage.';
     $S['robotsPage'] = ['title' => 'Первый экран и поиск', 'group' => $R, 'url' => '/roboty.html', 'fields' => [
         f('bool', $rp . 'hidden', 'Скрыть страницу с сайта', 'Страница, ссылки на неё в меню и карточка на главной пропадут. Тексты сохранятся.'),
@@ -354,7 +385,7 @@ function admin_sections(): array
     ]];
 
     // Порядок в меню админки — как разделы идут на страницах
-    $order = ['hero', 'modules', 'principle', 'greenhouse', 'robotics', 'frame', 'specs', 'steps', 'documents', 'lead', 'menu', 'seo',
+    $order = ['hero', 'modules', 'principle', 'greenhouse', 'robotics', 'frame', 'specs', 'calc', 'steps', 'documents', 'lead', 'menu', 'seo',
         'robotsPage', 'programs', 'robot', 'audience', 'gardens', 'company', 'thanks'];
     return array_replace(array_flip($order), $S);
 }

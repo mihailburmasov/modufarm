@@ -191,6 +191,9 @@
         opts: opts.map(function (el) { return el.getAttribute('data-title').toLowerCase(); }),
         price: known ? money(total) + (pending.length ? ' (без учёта позиций по запросу: ' + pending.join(', ') + ')' : '') : 'по запросу'
       };
+      // Расчёт уже передан в форму (окно закрыли, конфигурацию поменяли) — обновить, чтобы ушёл актуальный
+      var field = document.querySelector('[data-calc-field]');
+      if (field && field.value) setCalc(calcSummary());
     };
 
     calcSummary = function () {

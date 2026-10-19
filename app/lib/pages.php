@@ -11,7 +11,7 @@ function validate_data(): void
     $photoOk = fn($id) => is_string($id) && isset(S::$photoIndex[$id]);
 
     if (!phones()) $err[] = 'нужен хотя бы один телефон';
-    foreach (['hero' => 'первый экран главной', 'robotsPage' => 'первый экран страницы «Роботы»', 'modules' => 'блоки 10 × 100 м', 'principle' => 'устройство теплицы', 'robotics' => 'роботизированный уход', 'frame' => 'каркас'] as $key => $name) {
+    foreach (['hero' => 'первый экран главной', 'robotsPage' => 'первый экран страницы «Роботы»', 'modules' => 'модульный комплекс от 10 × 50 м', 'principle' => 'устройство теплицы', 'robotics' => 'роботизированный уход', 'frame' => 'каркас'] as $key => $name) {
         $id = $s[$key]['photo'] ?? null;
         if (in_array($key, ['principle', 'robotics', 'frame'], true) && $id === '') continue; // без картинки можно
         if (!$photoOk($id)) $err[] = "фото в разделе «{$name}» не найдено в медиатеке";

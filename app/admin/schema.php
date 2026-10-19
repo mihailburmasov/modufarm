@@ -63,7 +63,7 @@ function admin_sections(): array
     ]];
 
     $m = $s . 'modules.';
-    $S['modules'] = ['title' => 'Блоки 10 × 100 м', 'group' => $G, 'url' => '/#moduli', 'fields' => array_merge(
+    $S['modules'] = ['title' => 'Модульный комплекс от 10 × 50 м', 'group' => $G, 'url' => '/#moduli', 'fields' => array_merge(
         [hide_field($m), head('Заголовок раздела')],
         title_fields($m),
         [

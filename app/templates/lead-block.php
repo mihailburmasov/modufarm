@@ -10,7 +10,7 @@ $c = S::$company; $ld = S::$site['lead'];
         <p class="section__lead section__lead--light"><?= esc($ld['lead']) ?></p>
         <ul class="lead__contacts">
 <?php foreach (phones() as $p): ?>
-          <li><?= phone_a($p, true, '<svg class="ic"><use href="#i-phone"/></svg>') ?><?php if (($p['note'] ?? '') !== ''): ?> <span class="lead__note"><?= esc($p['note']) ?></span><?php endif ?></li>
+          <li><?= phone_a($p, true, '<svg class="ic"><use href="#i-phone"/></svg>') ?><?php if (($p['note'] ?? '') !== '' && ($p['noteUrl'] ?? '') !== ''): ?> <a class="lead__note" href="<?= esc($p['noteUrl']) ?>" target="_blank" rel="noopener"><?= esc($p['note']) ?></a><?php elseif (($p['note'] ?? '') !== ''): ?> <span class="lead__note"><?= esc($p['note']) ?></span><?php endif ?></li>
 <?php endforeach ?>
           <li class="lead__mail"><?= mail_a(true, '', '<svg class="ic"><use href="#i-mail"/></svg>') ?></li>
         </ul>

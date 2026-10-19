@@ -168,7 +168,7 @@ function apply_values(array $fields, array $values, string $svc = ''): array
         $docs[$file] ??= doc_get($file);
         if ($real === 'company.json#phones') {
             if (!$val) throw new InvalidArgumentException('Нужен хотя бы один телефон');
-            $val = array_map(fn($p) => ['display' => $p['display'], 'tel' => tel_from_display($p['display'])] + (isset($p['note']) ? ['note' => $p['note']] : []), $val);
+            $val = array_map(fn($p) => ['display' => $p['display'], 'tel' => tel_from_display($p['display'])] + array_intersect_key($p, ['note' => 1, 'noteUrl' => 1]), $val);
         }
         if ($fd['type'] === 'bool' && !$val) { unset_path($docs[$file], $path); continue; }
         // пустое значение там, где и раньше ничего не было, не записываем (null остаётся null, ключ не появляется)

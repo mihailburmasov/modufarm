@@ -117,7 +117,7 @@ try {
   s.values['company.json#phones'][1].display = '8 978 111-22-33';
   r = await save('company', s.values);
   const c = JSON.parse(readFileSync('data/company.json', 'utf8'));
-  check(r.ok && c.phones[1].tel === '+79781112233' && c.phones[0].note === 'есть в MAX', 'телефон пересчитан, пометка цела');
+  check(r.ok && c.phones[1].tel === '+79781112233' && c.phones[0].note === 'написать в MAX' && c.phones[0].noteUrl.startsWith('https://max.ru/') && /<a class="lead__note" href="https:\/\/max\.ru\//.test(page()), 'телефон пересчитан, пометка и ссылка на MAX целы');
   check(page('politika.html').includes('href="tel:+79781112233"'), 'новый телефон в политике');
 
   // 9. Заявки: без имени — принимается (имя необязательно), UTM сохраняются; без согласия — отказ; бот — молча

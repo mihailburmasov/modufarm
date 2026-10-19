@@ -212,6 +212,8 @@ p { margin: 0; }
 .lead__contacts .ic { color: var(--c-lime); }
 .lead__contacts li + li { margin-top: 4px; }
 .lead__note { margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: rgba(184, 240, 122, .14); color: var(--c-lime); font: 500 13px/1.6 var(--f-body); letter-spacing: 0; vertical-align: middle; white-space: nowrap; }
+.lead__contacts a.lead__note { display: inline-block; color: var(--c-lime); transition: background .2s; }
+.lead__contacts a.lead__note:hover { background: rgba(184, 240, 122, .28); }
 .lead__mail { font-size: 19px; }
 .lead__mail a { word-break: break-all; }
 .lead__addr { margin-top: 32px; font-size: 14px; color: rgba(255, 255, 255, .55); }

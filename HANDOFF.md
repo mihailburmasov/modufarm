@@ -2,7 +2,7 @@
 
 Состояние на 19.10.2026. **Сайт переделан под основное направление — тепличные комплексы** (главная), прежнее содержание переехало на страницы «Роботы» (`roboty.html`) и «Сады» (`sady.html`). Есть админка (PHP + JSON), ждём домен и хостинг, чтобы её запустить.
 
-**Боевой сайт залит 19.10.2026: http://mittrobot.ru** (reg.ru, хостинг Хост-0 **u3679548** — тот же, где modufarm.ru; IP 37.140.192.183). Пока без SSL — см. «Что нужно для запуска». Яндекс Метрика 113675303 включена только там.
+**Боевой сайт работает с 19.10.2026: https://mittrobot.ru** (reg.ru, хостинг Хост-0 **u3679548** — тот же, где modufarm.ru; IP 37.140.192.183). SSL Let's Encrypt (ISPmanager, продлевается сам), http и www → https://mittrobot.ru одной переадресацией. Яндекс Метрика 113675303 включена только там.
 
 **Превью на Pages актуально** (запушено и опубликовано 19.10.2026, коммит 02a92b9 — с калькулятором; сборка Actions успешна, раздел `#kalkulyator` и новый `main.js` на живом превью проверены): главная (теплицы), `roboty.html`, `sady.html`, выписка СРО, новый логотип, фавикон и `og.jpg`, выровненное превью ИСО — всё отдаёт 200. Токен `gh` получил право `workflow`, пуш с `.github/workflows/pages.yml` больше не блокируется.
 
@@ -61,7 +61,7 @@
 
 ## Где что
 
-- **Боевой сайт:** http://mittrobot.ru — reg.ru, Хост-0 u3679548 (FTP 37.140.192.183). Раскладка в `~/www`: `app/`, `data/`, `storage/` и корень сайта `mittrobot.ru/` (рядом чужой сайт `modufarm.ru/` и папки `~/modufarm-*` — не трогать). В `deploy.local.php`: `root => 'www'`, `docroot => 'mittrobot.ru'`. Доступы FTP и адрес входа в админку — только в `app/deploy.local.php` / `storage` на сервере и у пользователя, **не в git** (репозиторий публичный). PHP 8.3, `.htaccess` работает (Apache за nginx).
+- **Боевой сайт:** https://mittrobot.ru — reg.ru, Хост-0 u3679548 (FTP 37.140.192.183). Раскладка в `~/www`: `app/`, `data/`, `storage/` и корень сайта `mittrobot.ru/` (рядом чужой сайт `modufarm.ru/` и папки `~/modufarm-*` — не трогать). В `deploy.local.php`: `root => 'www'`, `docroot => 'mittrobot.ru'`. Доступы FTP и адрес входа в админку — только в `app/deploy.local.php` / `storage` на сервере и у пользователя, **не в git** (репозиторий публичный). PHP 8.3, `.htaccess` работает (Apache за nginx).
 - **Превью:** https://mihailburmasov.github.io/modufarm/ (GitHub Pages; форма здесь **не работает**, т.к. Pages не выполняет PHP)
 - **Репозиторий:** https://github.com/mihailburmasov/modufarm (публичный, ветка `main`)
 - **Локально:** `D:\Claude\Projects\ModuFarm`
@@ -133,8 +133,9 @@
 
 - [x] Хостинг и домен: reg.ru u3679548, mittrobot.ru (19.10.2026). Сначала домен был на отдельном хостинге u3684768 (до 16.11.2026, баланс 0) — туда успел уйти первый `init` (папки `www/app`, `www/data`, `www/storage` и файлы в `www/mittrobot.ru`); домен перенесён, **те файлы удалить** (с разрешения пользователя).
 - [x] `init` выполнен; адрес сайта в реквизитах — mittrobot.ru
-- [ ] **SSL** (Let's Encrypt в ISPmanager u3679548 для mittrobot.ru и www). Затем: `site_url` → https в `app/config.server.php` и `app/deploy.local.php`; залить `config.server.php` по FTP в `www/app/config.local.php` (push его не трогает); в `public/.htaccess` раскомментировать три строки https и поменять редирект с www на `https://%1`; `push`. Убрать `ip` из `deploy.local.php`, когда DNS обновится везде.
-- [ ] Войти в админку (только после https) и проверить её JS; «Настройки» → почта/Telegram для заявок, адрес отправителя на домене, проверочная заявка
+- [x] SSL Let's Encrypt выпущен (19.10.2026), `site_url` = https в `config.server.php` и `deploy.local.php`, на сервере — `www/app/config.local.php` (**push его не заливает** — при смене настроек сервера заливать этот файл по FTP отдельно); переадресация на https в `public/.htaccess` (Apache видит HTTPS/X-Forwarded-Proto — петли нет). Ключ `ip` в `deploy.local.php` можно убрать, когда DNS обновится везде.
+- [x] Вход в админку на боевом сайте проверен в браузере (Edge): панель открывается, ошибок JS нет.
+- [ ] В админке: «Настройки» → почта/Telegram для заявок, адрес отправителя на домене, проверочная заявка
 - [ ] Выключить GitHub Pages после переезда
 - [x] Метрика 113675303 — `metrika_id` в `app/config.server.php` (на сервере — `www/app/config.local.php`); локально и на Pages её нет
 
